@@ -3,6 +3,8 @@ import Products from "./Products";
 import About from "./About";
 import Contact from "./Contact";
 import Footer from "./Footer";
+import OffCanvasCart from "./OffCanvasCart";
+import OffCanvasProfile from "./OffCanvasProfile";
 function Dashboard(){
     return(
         <>
@@ -11,6 +13,8 @@ function Dashboard(){
         <About />
         <Contact />
         <Footer />
+        <OffCanvasCart />
+        <OffCanvasProfile />
         </>
     )
 }
