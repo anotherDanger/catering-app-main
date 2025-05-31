@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import ModalProduct from "./ModalProduct"
+import ModalProduct from "./ModalProduct"
 function Products() {
 //     const [products, setProducts] = useState([]);
 //
@@ -121,7 +121,7 @@ function Products() {
                     </div>
                 </div>
             </div>
-            {/* <ModalProduct /> */}
+            <ModalProduct />
         </div>
 
     );
