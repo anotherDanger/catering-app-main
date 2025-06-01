@@ -7,15 +7,15 @@ import OffCanvasCart from "./OffCanvasCart";
 import OffCanvasProfile from "./OffCanvasProfile";
 function Dashboard(){
     return(
-        <>
-        <Banner />
+        <div id="dashboard">
+            <Banner />
         <Products />
         <About />
         <Contact />
         <Footer />
         <OffCanvasCart />
         <OffCanvasProfile />
-        </>
+        </div>
     )
 }
 

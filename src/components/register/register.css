@@ -47,7 +47,11 @@
     background-color: #ff6600;
     color: #ffffff;
     width: 100%;
+    display: block;
+    margin: 20px auto; /* ini akan membuat tombol berada di tengah */
+    text-align: center;
   }
+  
   
   .btn-login:hover {
     background-color: #D78325;

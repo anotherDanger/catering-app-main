@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 function OffCanvasProfile() {
     return (
         <div
@@ -24,8 +25,8 @@ function OffCanvasProfile() {
                 </div>
 
                 <div className="d-grid gap-2 mb-3">
-                    <a href="../create_account/create_account.php" className="btn btn-outline-primary">Buat Akun</a>
-                    <a href="../login/login.php" className="btn btn-primary">Masuk</a>
+                    <Link to="/v1/register" className="btn btn-outline-primary">Buat Akun</Link>
+                    <Link to="/v1/login" className="btn btn-primary">Masuk</Link>
                 </div>
 
                 <form
