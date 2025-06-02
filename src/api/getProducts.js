@@ -15,9 +15,11 @@ async function getProducts(){
     }
     const response = await data.json();
 
-    return response;
+    return response.data;
     }catch(error){
         console.log(error)
     }
 
 }
+
+export default getProducts;

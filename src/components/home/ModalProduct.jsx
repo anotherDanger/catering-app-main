@@ -1,8 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function ModalProduct() {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const closeModal = () => {
     const modalEl = document.getElementById('productModal');
@@ -14,7 +15,6 @@ function ModalProduct() {
     }
   };
 
-  // Fungsi umum untuk tutup modal dan navigasi
   const handleNavigate = (path) => {
     closeModal();
 
@@ -29,6 +29,10 @@ function ModalProduct() {
   };
 
   useEffect(() => {
+    // Cek apakah access_token tersedia
+    const token = localStorage.getItem('access_token');
+    setIsLoggedIn(!!token); // true jika ada, false jika tidak
+
     return () => {
       const modalEl = document.getElementById('productModal');
       if (modalEl) {
@@ -67,28 +71,36 @@ function ModalProduct() {
               </div>
             </div>
             <div className="modal-footer text-center">
-              <button
-                type="button"
-                className="btn btn-outline-primary"
-                onClick={() => handleNavigate('/v1/checkout')}
-              >
-                Pesan
-              </button>
-              <button type="button" className="btn-popup btn-add-to-cart">Tambahkan Ke Keranjang</button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => handleNavigate('/v1/login')}
-              >
-                Masuk
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => handleNavigate('/v1/register')}
-              >
-                Buat Akun
-              </button>
+              {isLoggedIn && (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={() => handleNavigate('/v1/checkout')}
+                  >
+                    Pesan
+                  </button>
+                  <button type="button" className="btn-popup btn-add-to-cart">Tambahkan Ke Keranjang</button>
+                </>
+              )}
+              {!isLoggedIn && (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => handleNavigate('/v1/login')}
+                  >
+                    Masuk
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => handleNavigate('/v1/register')}
+                  >
+                    Buat Akun
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
