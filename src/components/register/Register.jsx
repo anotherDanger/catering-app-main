@@ -5,16 +5,13 @@ import './register.css';
 const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Tambahkan logic untuk membuat akun di sini
     console.log('Form submitted');
   };
 
   useEffect(() => {
-      // Saat masuk login, matikan scroll (jika mau)
       document.body.style.overflow = 'hidden';
   
       return () => {
-        // Saat keluar dari login, aktifkan scroll lagi
         document.body.style.overflow = 'auto';
         document.documentElement.style.overflow = 'auto'; // penting!
       };

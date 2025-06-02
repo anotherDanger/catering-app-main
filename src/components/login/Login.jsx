@@ -8,13 +8,11 @@ const Login = () => {
   };
 
   useEffect(() => {
-    // Saat masuk login, matikan scroll (jika mau)
     document.body.style.overflow = 'hidden';
 
     return () => {
-      // Saat keluar dari login, aktifkan scroll lagi
       document.body.style.overflow = 'auto';
-      document.documentElement.style.overflow = 'auto'; // penting!
+      document.documentElement.style.overflow = 'auto';
     };
   }, []);
 
