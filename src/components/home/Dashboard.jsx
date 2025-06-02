@@ -11,7 +11,6 @@ function Dashboard(){
             <Banner />
         <Products />
         <About />
-        <Contact />
         <Footer />
         <OffCanvasCart />
         <OffCanvasProfile />
