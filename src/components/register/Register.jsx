@@ -1,12 +1,25 @@
 import React from 'react';
 import { useEffect } from 'react';
 import './register.css';
+import userRegister from '../../api/userRegister';
 
 const Register = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted');
-  };
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      console.log('Form submitted');
+      const form = document.getElementById('userForm');
+  
+      try {
+        const response = await userRegister(form);
+        console.log('Response:', response.code);
+
+        localStorage.setItem("access_token", response.data.username)
+        
+        
+      } catch (error) {
+        console.error('Error during registration:', error);
+      }
+    };
 
   useEffect(() => {
       document.body.style.overflow = 'hidden';
@@ -29,7 +42,7 @@ const Register = () => {
           <div className="card">
             <div className="card-header">Buat Akun</div>
             <div className="card-body">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} id='userForm'>
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">
                     Username
@@ -54,7 +67,7 @@ const Register = () => {
                     placeholder="Password"
                   />
                 </div>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <label htmlFor="password2" className="form-label">
                     Konfirmasi Password
                   </label>
@@ -65,7 +78,7 @@ const Register = () => {
                     id="password2"
                     placeholder="Konfirmasi Password"
                   />
-                </div>
+                </div> */}
                 <button type="submit" name="submit" className="btn btn-login">
                   Buat Akun
                 </button>
