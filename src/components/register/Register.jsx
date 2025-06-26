@@ -1,26 +1,56 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './register.css';
+import { registerUser } from '../../api/getProfile';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-  const handleSubmit = (e) => {
+  const [form, setForm] = useState({
+    first_name: '',
+    last_name: '',
+    username: '',
+    password: '',
+    password2: ''
+  });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted');
+    setError('');
+
+    if (form.password !== form.password2) {
+      setError('Password dan konfirmasi password tidak cocok');
+      return;
+    }
+
+    try {
+      await registerUser({
+        first_name: form.first_name,
+        last_name: form.last_name,
+        username: form.username,
+        password: form.password
+      });
+      navigate('/');
+    } catch (err) {
+      setError(err.message || 'Registrasi gagal');
+    }
   };
 
   useEffect(() => {
-      document.body.style.overflow = 'hidden';
-  
-      return () => {
-        document.body.style.overflow = 'auto';
-        document.documentElement.style.overflow = 'auto'; // penting!
-      };
-    }, []);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+    };
+  }, []);
 
   return (
     <div>
       <div className="background-image"></div>
-
       <div
         className="container-fluid d-flex justify-content-center align-items-center"
         style={{ height: '100vh' }}
@@ -30,39 +60,69 @@ const Register = () => {
             <div className="card-header">Buat Akun</div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>
+                {error && <p className="text-danger">{error}</p>}
                 <div className="mb-3">
-                  <label htmlFor="username" className="form-label">
-                    Username
-                  </label>
+                  <label htmlFor="first_name" className="form-label">Nama Depan</label>
+                  <input
+                    type="text"
+                    name="first_name"
+                    className="form-control"
+                    id="first_name"
+                    value={form.first_name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Nama Depan"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="last_name" className="form-label">Nama Belakang</label>
+                  <input
+                    type="text"
+                    name="last_name"
+                    className="form-control"
+                    id="last_name"
+                    value={form.last_name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Nama Belakang"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="username" className="form-label">Username</label>
                   <input
                     type="text"
                     name="username"
                     className="form-control"
                     id="username"
+                    value={form.username}
+                    onChange={handleChange}
+                    required
                     placeholder="Username"
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="password" className="form-label">
-                    Password
-                  </label>
+                  <label htmlFor="password" className="form-label">Password</label>
                   <input
                     type="password"
                     name="password"
                     className="form-control"
                     id="password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
                     placeholder="Password"
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="password2" className="form-label">
-                    Konfirmasi Password
-                  </label>
+                  <label htmlFor="password2" className="form-label">Konfirmasi Password</label>
                   <input
                     type="password"
                     name="password2"
                     className="form-control"
                     id="password2"
+                    value={form.password2}
+                    onChange={handleChange}
+                    required
                     placeholder="Konfirmasi Password"
                   />
                 </div>

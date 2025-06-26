@@ -7,8 +7,8 @@ export async function tryRefreshToken() {
   if (refreshResponse.ok) {
     const refreshData = await refreshResponse.json();
     localStorage.setItem("access_token", refreshData.access_token);
-    localStorage.setItem("user", JSON.stringify(refreshData.user));
-    return refreshData.user;
+    localStorage.setItem("user", refreshData.user.username);
+    return refreshData.user.username;
   }
 
   localStorage.removeItem("access_token");
@@ -18,20 +18,14 @@ export async function tryRefreshToken() {
 
 export function getStoredUser() {
   const token = localStorage.getItem("access_token");
-  const user = localStorage.getItem("user");
-  if (!token || !user) return null;
-
-  try {
-    return JSON.parse(user);
-  } catch {
-    return null;
-  }
+  const username = localStorage.getItem("user");
+  if (!token || !username) return null;
+  return username;
 }
 
 export async function checkLogin() {
   const user = getStoredUser();
   if (user) return user;
-
   return await tryRefreshToken();
 }
 
@@ -64,7 +58,7 @@ export async function loginUser({ username, password }) {
       throw new Error(errorData.message || "Login gagal");
     }
 
-    const loginData = await response.json();
+    await response.json();
 
     const authResponse = await fetch("http://localhost:8081/v1/auth", {
       method: "POST",
@@ -85,9 +79,54 @@ export async function loginUser({ username, password }) {
       localStorage.setItem("access_token", tokenData.access_token);
     }
 
-    localStorage.setItem("user", JSON.stringify({ username }));
+    localStorage.setItem("user", username);
 
-    return { username };
+    return username;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function registerUser({ first_name, last_name, username, password }) {
+  try {
+    const response = await fetch("http://localhost:8083/v1/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ first_name, last_name, username, password }),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Registrasi gagal");
+    }
+
+    await response.json();
+
+    const authResponse = await fetch("http://localhost:8081/v1/auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username }),
+      credentials: "include",
+    });
+
+    if (!authResponse.ok) {
+      throw new Error("Autentikasi tambahan gagal setelah registrasi");
+    }
+
+    const tokenData = await authResponse.json();
+
+    if (tokenData.access_token) {
+      localStorage.setItem("access_token", tokenData.access_token);
+    }
+
+    localStorage.setItem("user", username);
+
+    return username;
   } catch (error) {
     throw error;
   }
