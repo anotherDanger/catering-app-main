@@ -10,7 +10,6 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        {/* Ini yang render di <Outlet /> */}
         <Route index element={<Dashboard />} />
       </Route>
 

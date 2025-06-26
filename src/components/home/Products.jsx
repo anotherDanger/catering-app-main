@@ -8,7 +8,7 @@ function Products() {
         const fetchData = async () => {
             try {
                 const data = await getProducts();
-                setProducts(data); // simpan seluruh array produk
+                setProducts(data);
             } catch (err) {
                 console.error("Gagal ambil produk:", err);
             }

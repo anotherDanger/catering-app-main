@@ -1,25 +1,21 @@
-import { data } from "react-router-dom";
-
-async function getProducts(){
-    const request = new Request("http://localhost:8080/v1/products", {
+async function getProducts() {
+    const request = new Request("http://localhost:8083/v1/products", {
         headers: {
-            "Content-Type":"application/json"
+            "Content-Type": "application/json"
         },
-        method:"GET"
+        method: "GET"
     });
 
-    try{
-        const data = await fetch(request);
-    if (! data.ok){
-     throw new(data.statusText)   
+    try {
+        const response = await fetch(request);
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        console.log(error);
     }
-    const response = await data.json();
-
-    return response.data;
-    }catch(error){
-        console.log(error)
-    }
-
 }
 
 export default getProducts;
