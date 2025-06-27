@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addToCart } from '../../api/cart'
 
@@ -13,25 +13,56 @@ function ModalProduct({ product, onClose, modalRef }) {
     setQuantity(1)
   }, [product])
 
+  useEffect(() => {
+    if (!modalRef.current) return
+    const modalEl = modalRef.current
+    const handleHidden = () => {
+      if (onClose) onClose()
+    }
+    modalEl.addEventListener('hidden.bs.modal', handleHidden)
+    return () => {
+      modalEl.removeEventListener('hidden.bs.modal', handleHidden)
+    }
+  }, [modalRef, onClose])
+
   const closeModal = () => {
     if (modalRef.current) {
       const modalInstance = window.bootstrap.Modal.getInstance(modalRef.current)
       if (modalInstance) modalInstance.hide()
     }
-    onClose()
   }
 
   const handleNavigate = (path) => {
     if (modalRef.current) {
-      modalRef.current.addEventListener('hidden.bs.modal', () => navigate(path), { once: true })
+      modalRef.current.addEventListener(
+        'hidden.bs.modal',
+        () => navigate(path),
+        { once: true }
+      )
       closeModal()
     } else {
       navigate(path)
     }
   }
 
-  const increment = () => setQuantity((q) => q + 1)
+  const increment = () => {
+    setQuantity((q) => {
+      if (!product) return q
+      return q < product.product_stock ? q + 1 : q
+    })
+  }
+
   const decrement = () => setQuantity((q) => (q > 1 ? q - 1 : 1))
+
+  const handleQuantityChange = (e) => {
+    if (!product) return
+    const val = parseInt(e.target.value)
+    if (!isNaN(val) && val > 0 && val <= product.product_stock) {
+      setQuantity(val)
+    } else if (val > product.product_stock) {
+      setQuantity(product.product_stock)
+    }
+  }
 
   const handleAddToCartClick = async () => {
     const token = localStorage.getItem('access_token')
@@ -44,8 +75,8 @@ function ModalProduct({ product, onClose, modalRef }) {
       alert('User tidak ditemukan')
       return
     }
-    if (!quantity || quantity < 1) {
-      alert('Jumlah tidak valid')
+    if (!quantity || quantity < 1 || quantity > product.product_stock) {
+      alert('Jumlah tidak valid atau melebihi stok')
       return
     }
     const result = await addToCart({ product, quantity, token, username: user })
@@ -71,7 +102,6 @@ function ModalProduct({ product, onClose, modalRef }) {
               className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
-              onClick={closeModal}
             ></button>
           </div>
           <div className="modal-body">
@@ -87,18 +117,28 @@ function ModalProduct({ product, onClose, modalRef }) {
                 <h3>{product.product_name}</h3>
                 <p>Rp. {product.product_price.toLocaleString()}/porsi</p>
                 <div className="quantity">
-                  <button className="minus-btn" type="button" onClick={decrement}>-</button>
+                  <button
+                    className="minus-btn"
+                    type="button"
+                    onClick={decrement}
+                  >
+                    -
+                  </button>
                   <input
                     type="text"
                     className="quantity-input"
                     value={quantity}
-                    onChange={(e) => {
-                      const val = parseInt(e.target.value)
-                      if (!isNaN(val) && val > 0) setQuantity(val)
-                    }}
+                    onChange={handleQuantityChange}
                   />
-                  <button className="plus-btn" type="button" onClick={increment}>+</button>
+                  <button
+                    className="plus-btn"
+                    type="button"
+                    onClick={increment}
+                  >
+                    +
+                  </button>
                 </div>
+                <p className="mt-2">Stok tersedia: {product.product_stock}</p>
               </div>
               <div className="col-md-12 pt-3">
                 <p>Deskripsi :</p>
