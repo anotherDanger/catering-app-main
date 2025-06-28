@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { fetchDistrictsByRegency, fetchVillagesByDistrict } from '../../api/wilayah'
 import './checkout.css'
+import { postCheckout } from '../../api/checkout.js'
 
 const Checkout = () => {
   const location = useLocation()
   const checkoutData = location.state || {}
-
   const [districts, setDistricts] = useState([])
   const [villages, setVillages] = useState([])
   const [form, setForm] = useState({
@@ -37,7 +37,6 @@ const Checkout = () => {
   const handleChange = async (e) => {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
-
     if (name === 'kecamatan') {
       const selected = districts.find(d => d.name === value)
       if (selected) {
@@ -52,9 +51,23 @@ const Checkout = () => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Checkout data:', form)
+    try {
+      const username = localStorage.getItem('user') || ''
+      const payload = {
+        ...form,
+        product_id: checkoutData.product?.product_id || '',
+        product_name: checkoutData.product?.product_name || '',
+        quantity: checkoutData.quantity || 0,
+        total: checkoutData.total || 0,
+        username
+      }
+      await postCheckout(payload)
+      alert('Pesanan berhasil dibuat')
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   return (
@@ -74,7 +87,7 @@ const Checkout = () => {
             </div>
 
             <div className="checkout-form-group">
-              <label htmlFor="alamat">Alamat</label>
+              <label htmlFor="alamat">Alamat Lengkap</label>
               <input type="text" id="alamat" name="alamat" className="form-control" value={form.alamat} onChange={handleChange} required />
             </div>
 
