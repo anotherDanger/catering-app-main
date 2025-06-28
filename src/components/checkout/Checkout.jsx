@@ -1,49 +1,97 @@
-import { useEffect } from 'react';
-import React from 'react';
-import './checkout.css';
+import React, { useEffect, useState } from 'react'
+import './checkout.css'
+import { fetchDistrictsByRegency, fetchVillagesByDistrict } from '../../api/wilayah'
 
 const Checkout = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Checkout submitted');
-  };
+  const [districts, setDistricts] = useState([])
+  const [villages, setVillages] = useState([])
+  const [form, setForm] = useState({
+    nama: '',
+    no_hp: '',
+    alamat: '',
+    kecamatan: '',
+    desa: '',
+  })
 
-    useEffect(() => {
-        document.body.style.overflow = 'hidden';
-    
-        return () => {
-          document.body.style.overflow = 'auto';
-          document.documentElement.style.overflow = 'auto'; // penting!
-        };
-      }, []);
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    async function loadDistricts() {
+      try {
+        const data = await fetchDistrictsByRegency('3301') // Banyumas
+        setDistricts(data)
+      } catch (e) {
+        alert(e.message)
+      }
+    }
+    loadDistricts()
+    return () => {
+      document.body.style.overflow = 'auto'
+      document.documentElement.style.overflow = 'auto'
+    }
+  }, [])
+
+  const handleChange = async (e) => {
+    const { name, value } = e.target
+    setForm(prev => ({ ...prev, [name]: value }))
+
+    if (name === 'kecamatan') {
+      const selected = districts.find(d => d.name === value)
+      if (selected) {
+        try {
+          const villageData = await fetchVillagesByDistrict(selected.id)
+          setVillages(villageData)
+          setForm(prev => ({ ...prev, desa: '' }))
+        } catch (e) {
+          alert(e.message)
+        }
+      }
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log('Checkout data:', form)
+  }
 
   return (
     <div className="checkout-container">
       <div className="checkout-card">
-        <div className="checkout-card-img">
-          {/* Tidak ada gambar */}
-        </div>
         <div className="checkout-card-body">
-          <div className="checkout-card-title">
-            <h3>Pembayaran</h3>
-          </div>
+          <h3>Pembayaran</h3>
           <form onSubmit={handleSubmit}>
-            <input type="hidden" name="product_id" value="123" />
-            <input type="hidden" name="quantity" value="1" />
-
             <div className="checkout-form-group">
               <label htmlFor="nama">Nama</label>
-              <input type="text" name="nama" id="nama" className="form-control" required />
+              <input type="text" id="nama" name="nama" className="form-control" value={form.nama} onChange={handleChange} required />
             </div>
 
             <div className="checkout-form-group">
               <label htmlFor="no_hp">Nomor HP</label>
-              <input type="text" name="no_hp" id="no_hp" className="form-control" required />
+              <input type="text" id="no_hp" name="no_hp" className="form-control" value={form.no_hp} onChange={handleChange} required />
             </div>
 
             <div className="checkout-form-group">
               <label htmlFor="alamat">Alamat</label>
-              <input type="text" name="alamat" id="alamat" className="form-control" required />
+              <input type="text" id="alamat" name="alamat" className="form-control" value={form.alamat} onChange={handleChange} required />
+            </div>
+
+            <div className="checkout-form-group">
+              <label htmlFor="kecamatan">Kecamatan</label>
+              <select id="kecamatan" name="kecamatan" className="form-control" value={form.kecamatan} onChange={handleChange} required>
+                <option value="">Pilih Kecamatan</option>
+                {districts.map(d => (
+                  <option key={d.id} value={d.name}>{d.name}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="checkout-form-group">
+              <label htmlFor="desa">Kelurahan / Desa</label>
+              <select id="desa" name="desa" className="form-control" value={form.desa} onChange={handleChange} required>
+                <option value="">Pilih Desa</option>
+                {villages.map(v => (
+                  <option key={v.id} value={v.name}>{v.name}</option>
+                ))}
+              </select>
             </div>
 
             <div className="checkout-icon-container">
@@ -56,62 +104,8 @@ const Checkout = () => {
           </form>
         </div>
       </div>
-
-      {/* Modal ShopeePay */}
-      <div className="modal fade" id="modalSpay" tabIndex="-1" aria-labelledby="modalSpayLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="modalSpayLabel">ShopeePay</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-            </div>
-            <div className="modal-body">
-              Silakan bayar ke 08xxxxxx dan konfirmasi via WA ke Admin.
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Modal GoPay */}
-      <div className="modal fade" id="modalGopay" tabIndex="-1" aria-labelledby="modalGopayLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="modalGopayLabel">GoPay</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-            </div>
-            <div className="modal-body">
-              Silakan bayar ke 08xxxxxx dan konfirmasi via WA ke Admin.
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Modal DANA */}
-      <div className="modal fade" id="modalDana" tabIndex="-1" aria-labelledby="modalDanaLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="modalDanaLabel">DANA</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-            </div>
-            <div className="modal-body">
-              Silakan bayar ke 08xxxxxx dan konfirmasi via WA ke Admin.
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Checkout;
+export default Checkout
