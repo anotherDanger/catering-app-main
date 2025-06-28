@@ -6,13 +6,23 @@ function OffCanvasProfile() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    async function loadUser() {
-      const loggedInUser = await checkLogin();
-      if (loggedInUser) setUser(loggedInUser);
+    const localUser = localStorage.getItem("user");
+    if (localUser) {
+      setUser({ username: localUser });
+    } else {
+      async function loadUser() {
+        const loggedInUser = await checkLogin();
+        if (loggedInUser) setUser(loggedInUser);
+      }
+      loadUser();
     }
-
-    loadUser();
   }, []);
+
+  const handleLogout = async () => {
+    await logoutUser();
+    localStorage.removeItem("user");
+    setUser(null);
+  };
 
   return (
     <div
@@ -46,7 +56,7 @@ function OffCanvasProfile() {
             <Link to="/v1/login" className="btn btn-primary">Masuk</Link>
           </div>
         ) : (
-          <button onClick={logoutUser} className="btn btn-danger w-100">Logout</button>
+          <button onClick={handleLogout} className="btn btn-danger w-100">Logout</button>
         )}
       </div>
     </div>
