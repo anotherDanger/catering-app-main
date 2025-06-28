@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import './checkout.css'
+import { useLocation } from 'react-router-dom'
 import { fetchDistrictsByRegency, fetchVillagesByDistrict } from '../../api/wilayah'
+import './checkout.css'
 
 const Checkout = () => {
+  const location = useLocation()
+  const checkoutData = location.state || {}
+
   const [districts, setDistricts] = useState([])
   const [villages, setVillages] = useState([])
   const [form, setForm] = useState({
@@ -17,7 +21,7 @@ const Checkout = () => {
     document.body.style.overflow = 'hidden'
     async function loadDistricts() {
       try {
-        const data = await fetchDistrictsByRegency('3301') // Banyumas
+        const data = await fetchDistrictsByRegency('3301')
         setDistricts(data)
       } catch (e) {
         alert(e.message)
@@ -92,6 +96,11 @@ const Checkout = () => {
                   <option key={v.id} value={v.name}>{v.name}</option>
                 ))}
               </select>
+            </div>
+
+            <div className="checkout-form-group">
+              <label>Total Harga</label>
+              <div className="fw-bold">Rp {checkoutData.total ? checkoutData.total.toLocaleString() : '0'}</div>
             </div>
 
             <div className="checkout-icon-container">
