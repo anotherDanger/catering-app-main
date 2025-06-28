@@ -26,7 +26,7 @@ export const addToCart = async ({ product, quantity, token, username }) => {
     if (response.ok) {
       return { success: true, message: 'Produk berhasil ditambahkan ke keranjang!' };
     } else {
-      return { success: false, message: result.message || 'Gagal menambahkan produk.' };
+      return { success: false, message: result.data || 'Gagal menambahkan produk.' };
     }
   } catch (error) {
     return { success: false, message: 'Terjadi kesalahan jaringan.' };
@@ -51,7 +51,7 @@ export const getCart = async (username, token) => {
     if (response.ok) {
       return { success: true, data: result.data || [] };
     } else {
-      return { success: false, message: result.message || 'Gagal mengambil keranjang.' };
+      return { success: false, message: result.data || 'Gagal mengambil keranjang.' };
     }
   } catch (error) {
     return { success: false, message: 'Terjadi kesalahan jaringan.' };
@@ -60,7 +60,7 @@ export const getCart = async (username, token) => {
 
 export const deleteCartItem = async (username, productId, token) => {
   if (!username || !productId || !token) {
-    return { success: false, message: 'Data tidak lengkap.' }
+    return { success: false, message: 'Data tidak lengkap.' };
   }
 
   try {
@@ -69,24 +69,23 @@ export const deleteCartItem = async (username, productId, token) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
+    });
 
-    const result = await response.json()
+    const result = await response.json();
 
     if (response.ok) {
-      return { success: true, message: result.message || 'Produk berhasil dihapus dari keranjang.' }
+      return { success: true, message: result.data || 'Produk berhasil dihapus dari keranjang.' };
     } else {
-      return { success: false, message: result.message || 'Gagal menghapus produk.' }
+      return { success: false, message: result.data || 'Gagal menghapus produk.' };
     }
   } catch (error) {
-    return { success: false, message: 'Terjadi kesalahan jaringan.' }
+    return { success: false, message: 'Terjadi kesalahan jaringan.' };
   }
-}
-
+};
 
 export const decreaseCartItem = async (username, productId, quantity, token) => {
   if (!username || !productId || !quantity || !token) {
-    return { success: false, message: 'Data tidak lengkap.' }
+    return { success: false, message: 'Data tidak lengkap.' };
   }
 
   try {
@@ -98,16 +97,16 @@ export const decreaseCartItem = async (username, productId, quantity, token) => 
           Authorization: `Bearer ${token}`,
         },
       }
-    )
+    );
 
-    const result = await response.json()
+    const result = await response.json();
 
     if (response.ok) {
-      return { success: true, message: result.message || 'Quantity berhasil dikurangi.' }
+      return { success: true, message: result.data || 'Quantity berhasil dikurangi.' };
     } else {
-      return { success: false, message: result.message || 'Gagal mengurangi quantity.' }
+      return { success: false, message: result.data || 'Gagal mengurangi quantity.' };
     }
   } catch (error) {
-    return { success: false, message: 'Terjadi kesalahan jaringan.' }
+    return { success: false, message: 'Terjadi kesalahan jaringan.' };
   }
-}
+};
