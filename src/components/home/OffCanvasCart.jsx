@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getCart, deleteCartItem, decreaseCartItem, addToCart } from '../../api/cart'
+import { getCart, deleteCartItem, decreaseCartItem } from '../../api/cart'
 
 function OffCanvasCart() {
   const [cart, setCart] = useState([])
@@ -34,17 +34,28 @@ function OffCanvasCart() {
     if (item.quantity >= item.product_stock) return
     const username = localStorage.getItem('user')
     const token = localStorage.getItem('access_token')
-    await addToCart({
-      product: {
+    const response = await fetch(`http://localhost:8083/v1/cart/${username}/1`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
         product_id: item.product_id,
         product_name: item.product_name,
         product_price: item.price,
-      },
-      quantity: 1,
-      token,
-      username,
+        quantity: 1,
+        total_price: item.price * 1,
+      }),
     })
-    fetchCart()
+    const result = await response.json()
+    if (response.status === 400) {
+      alert('Jumlah melebihi stok produk.')
+      return
+    }
+    if (response.ok) {
+      fetchCart()
+    }
   }
 
   useEffect(() => {
@@ -52,9 +63,7 @@ function OffCanvasCart() {
     const handleShow = () => {
       fetchCart()
     }
-
     offcanvas.addEventListener('show.bs.offcanvas', handleShow)
-
     return () => {
       offcanvas.removeEventListener('show.bs.offcanvas', handleShow)
     }
