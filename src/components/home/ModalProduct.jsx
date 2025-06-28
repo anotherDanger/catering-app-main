@@ -32,16 +32,16 @@ function ModalProduct({ product, onClose, modalRef }) {
     }
   }
 
-  const handleNavigate = (path) => {
+  const handleNavigate = (path, state = {}) => {
     if (modalRef.current) {
       modalRef.current.addEventListener(
         'hidden.bs.modal',
-        () => navigate(path),
+        () => navigate(path, { state }),
         { once: true }
       )
       closeModal()
     } else {
-      navigate(path)
+      navigate(path, { state })
     }
   }
 
@@ -152,7 +152,13 @@ function ModalProduct({ product, onClose, modalRef }) {
                 <button
                   type="button"
                   className="btn btn-outline-primary"
-                  onClick={() => handleNavigate('/v1/checkout')}
+                  onClick={() =>
+                    handleNavigate('/v1/checkout', {
+                      product,
+                      quantity,
+                      total: product.product_price * quantity,
+                    })
+                  }
                 >
                   Pesan
                 </button>
