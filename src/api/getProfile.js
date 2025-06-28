@@ -7,8 +7,8 @@ export async function tryRefreshToken() {
   if (refreshResponse.ok) {
     const refreshData = await refreshResponse.json();
     localStorage.setItem("access_token", refreshData.access_token);
-    localStorage.setItem("user", refreshData.user.username);
-    return refreshData.user.username;
+    localStorage.setItem("user", refreshData.username);
+    return refreshData.username;
   }
 
   localStorage.removeItem("access_token");
