@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getCart, deleteCartItem, decreaseCartItem } from '../../api/cart'
 
 function OffCanvasCart() {
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   const fetchCart = async () => {
     setLoading(true)
@@ -48,7 +50,6 @@ function OffCanvasCart() {
         total_price: item.price * 1,
       }),
     })
-    const result = await response.json()
     if (response.status === 400) {
       alert('Jumlah melebihi stok produk.')
       return
@@ -69,14 +70,24 @@ function OffCanvasCart() {
     }
   }, [])
 
+  const handleCheckout = (item) => {
+    navigate('/v1/checkout', {
+      state: {
+        product: {
+          product_id: item.product_id,
+          product_name: item.product_name,
+        },
+        quantity: item.quantity,
+        total: item.price * item.quantity,
+      },
+    })
+  }
+
   return (
     <div>
       <div className="offcanvas offcanvas-end" tabIndex="-1" id="offCanfasCart">
         <div className="offcanvas-header">
           <h5 className="mb-0">Keranjang Belanja</h5>
-          <a href="../checkout/history.php" className="history-icon text-decoration-none">
-            <i className="fas fa-history"></i>
-          </a>
           <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
         </div>
         <div className="offcanvas-body" id="cartBody">
@@ -89,13 +100,13 @@ function OffCanvasCart() {
               {cart.map((item, index) => (
                 <li
                   key={index}
-                  className="list-group-item d-flex justify-content-between align-items-center"
+                  className="list-group-item d-flex justify-content-between align-items-center flex-column flex-md-row"
                 >
                   <div>
                     <div>{item.product_name}</div>
                     <small>{item.quantity} × Rp{item.price.toLocaleString()}</small>
                   </div>
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center mt-2 mt-md-0">
                     <button
                       className="btn btn-sm btn-secondary me-1"
                       onClick={() => handleDecrease(item.product_id)}
@@ -114,10 +125,16 @@ function OffCanvasCart() {
                       Rp{(item.price * item.quantity).toLocaleString()}
                     </span>
                     <button
-                      className="btn btn-sm btn-danger"
+                      className="btn btn-sm btn-danger me-3"
                       onClick={() => handleDelete(item.product_id)}
                     >
                       &times;
+                    </button>
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={() => handleCheckout(item)}
+                    >
+                      Checkout
                     </button>
                   </div>
                 </li>
