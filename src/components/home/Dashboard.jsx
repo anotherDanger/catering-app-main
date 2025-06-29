@@ -5,6 +5,7 @@ import Contact from "./Contact";
 import Footer from "./Footer";
 import OffCanvasCart from "./OffCanvasCart";
 import OffCanvasProfile from "./OffCanvasProfile";
+import OffCanvasHistory from "./OffCanvasHistory";
 function Dashboard(){
     return(
         <div id="dashboard">
@@ -12,6 +13,7 @@ function Dashboard(){
         <Products />
         <About />
         <Footer />
+        <OffCanvasHistory />
         <OffCanvasCart />
         <OffCanvasProfile />
         </div>
