@@ -12,7 +12,7 @@ export const addToCart = async ({ product, quantity, token, username }) => {
   };
 
   try {
-    const response = await fetch(`http://localhost:8083/v1/cart/${username}/${quantity}`, {
+    const response = await fetch(`https://khatering/api/v1/cart/${username}/${quantity}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export const getCart = async (username, token) => {
   }
 
   try {
-    const response = await fetch(`http://localhost:8083/v1/cart/${username}`, {
+    const response = await fetch(`https://khatering/api/v1/cart/${username}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ export const deleteCartItem = async (username, productId, token) => {
   }
 
   try {
-    const response = await fetch(`http://localhost:8083/v1/cart/${username}/${productId}`, {
+    const response = await fetch(`https://khatering/api/v1/cart/${username}/${productId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -90,7 +90,7 @@ export const decreaseCartItem = async (username, productId, quantity, token) => 
 
   try {
     const response = await fetch(
-      `http://localhost:8083/v1/cart/${username}/${productId}/${quantity}`,
+      `https://khatering/api/v1/cart/${username}/${productId}/${quantity}`,
       {
         method: 'DELETE',
         headers: {

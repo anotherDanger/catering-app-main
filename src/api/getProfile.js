@@ -1,5 +1,5 @@
 export async function tryRefreshToken() {
-  const refreshResponse = await fetch("http://localhost:8081/v1/refresh", {
+  const refreshResponse = await fetch("https://khatering/v1/refresh", {
     method: "POST",
     credentials: "include",
   });
@@ -31,7 +31,7 @@ export async function checkLogin() {
 
 export async function logoutUser() {
   try {
-    await fetch("http://localhost:8081/v1/logout", {
+    await fetch("https://khatering/v1/logout", {
       method: "POST",
       credentials: "include",
     });
@@ -44,7 +44,7 @@ export async function logoutUser() {
 
 export async function loginUser({ username, password }) {
   try {
-    const response = await fetch("http://localhost:8083/v1/login", {
+    const response = await fetch("https://khatering/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export async function loginUser({ username, password }) {
 
     await response.json();
 
-    const authResponse = await fetch("http://localhost:8081/v1/auth", {
+    const authResponse = await fetch("https://khatering/v1/auth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +89,7 @@ export async function loginUser({ username, password }) {
 
 export async function registerUser({ first_name, last_name, username, password }) {
   try {
-    const response = await fetch("http://localhost:8083/v1/register", {
+    const response = await fetch("https://khatering/v1/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +105,7 @@ export async function registerUser({ first_name, last_name, username, password }
 
     await response.json();
 
-    const authResponse = await fetch("http://localhost:8081/v1/auth", {
+    const authResponse = await fetch("https://khatering/v1/auth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 async function getProducts() {
-    const request = new Request("http://localhost:8083/v1/products", {
+    const request = new Request("https://khatering/v1/products", {
         headers: {
             "Content-Type": "application/json"
         },

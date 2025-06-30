@@ -1,5 +1,5 @@
 export async function postCheckout(data) {
-  const response = await fetch('http://localhost:8083/v1/checkout', {
+  const response = await fetch('https://khatering/api/v1/checkout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
