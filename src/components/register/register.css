@@ -31,7 +31,7 @@
 .card {
   border: none;
   border-radius: 10px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
@@ -44,11 +44,16 @@
 
 .btn-login {
   background-color: #ff6600;
-  color: #ffffff;
+  color: #fff;
   width: 100%;
   display: block;
   margin: 20px auto;
   text-align: center;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .btn-login:hover {
