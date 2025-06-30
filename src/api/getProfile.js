@@ -105,7 +105,7 @@ export async function registerUser({ first_name, last_name, username, password }
 
     await response.json();
 
-    const authResponse = await fetch("https://khatering.shop/user/v1/auth", {
+    const authResponse = await fetch("https://khatering.shop/v1/auth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
