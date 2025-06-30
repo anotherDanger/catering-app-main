@@ -131,3 +131,4 @@ export async function registerUser({ first_name, last_name, username, password, 
     throw error;
   }
 }
+
