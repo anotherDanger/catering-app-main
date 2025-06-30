@@ -62,7 +62,7 @@ function Products() {
                 <SwiperSlide key={product.product_id || index}>
                   <div className="card crop-img">
                     <img
-                      src={product.product_image || "../img-products/sample.jpg"}
+                      src={product.image_metadata || "../img-products/sample.jpg"}
                       className="card-image card-img-top"
                       alt={product.product_name}
                     />
