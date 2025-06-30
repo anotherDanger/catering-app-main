@@ -18,4 +18,16 @@ async function getProducts() {
     }
 }
 
+export async function getProductImage(filename) {
+  const response = await fetch(`https://khatering.shop/images/${filename}`, {
+    method: "GET"
+  });
+
+  if (!response.ok) return null;
+  const blob = await response.blob();
+  return URL.createObjectURL(blob);
+}
+
+
+
 export default getProducts;
