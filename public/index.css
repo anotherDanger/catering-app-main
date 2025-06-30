@@ -47,12 +47,13 @@
     color: white;
     margin-left: 90px;
 }
-.banner{
-    background: url('./images/banner.png')no-repeat center center;
-    background-size: cover;
-    padding-top: 10%;
-    padding-bottom: 10%;
+.banner {
+    background: url('./images/banner.png') no-repeat right center;
+    background-size: contain;
+    padding-top: 5%;
+    padding-bottom: 5%;
 }
+
 h4{
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size:100px;
