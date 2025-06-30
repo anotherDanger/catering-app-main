@@ -80,17 +80,14 @@ const Checkout = () => {
               <label htmlFor="nama">Nama</label>
               <input type="text" id="nama" name="nama" className="form-control" value={form.nama} onChange={handleChange} required />
             </div>
-
             <div className="checkout-form-group">
               <label htmlFor="no_hp">Nomor HP</label>
               <input type="text" id="no_hp" name="no_hp" className="form-control" value={form.no_hp} onChange={handleChange} required />
             </div>
-
             <div className="checkout-form-group">
               <label htmlFor="alamat">Alamat Lengkap</label>
               <input type="text" id="alamat" name="alamat" className="form-control" value={form.alamat} onChange={handleChange} required />
             </div>
-
             <div className="checkout-form-group">
               <label htmlFor="kecamatan">Kecamatan</label>
               <select id="kecamatan" name="kecamatan" className="form-control" value={form.kecamatan} onChange={handleChange} required>
@@ -100,7 +97,6 @@ const Checkout = () => {
                 ))}
               </select>
             </div>
-
             <div className="checkout-form-group">
               <label htmlFor="desa">Kelurahan / Desa</label>
               <select id="desa" name="desa" className="form-control" value={form.desa} onChange={handleChange} required>
@@ -110,18 +106,15 @@ const Checkout = () => {
                 ))}
               </select>
             </div>
-
             <div className="checkout-form-group">
               <label>Total Harga</label>
               <div className="fw-bold">Rp {checkoutData.total ? checkoutData.total.toLocaleString() : '0'}</div>
             </div>
-
             <div className="checkout-icon-container">
               <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalSpay">ShopeePay</button>
               <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalGopay">GoPay</button>
               <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalDana">DANA</button>
             </div>
-
             <button type="submit" className="btn btn-primary w-100 mt-3">Buat Pesanan</button>
           </form>
         </div>
