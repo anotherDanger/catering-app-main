@@ -1,51 +1,62 @@
-.checkout-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-  background-color: #f9f9f9;
-  box-sizing: border-box;
+.btn-primary {
+  background-color: #d78325;
+  border-color: #d78325;
+  color: white;
+  transition: background-color 0.3s ease;
 }
 
-.checkout-card {
-  width: 100%;
-  max-width: 600px;
-  background-color: white;
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #b26a1d;
+  border-color: #b26a1d;
+  color: white;
+}
+
+.btn-outline-primary {
+  border-color: #d78325;
+  color: #d78325;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: #d78325;
+  color: white;
+}
+
+.btn-popup {
+  background-color: #d78325;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-popup:hover {
+  background-color: #b26a1d;
+  color: white;
+}
+
+.modal-content {
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
-  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: none;
 }
 
-.checkout-card-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
+.modal-header {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 24px;
 }
 
-.checkout-form-group {
-  margin-bottom: 15px;
+.modal-body {
+  padding: 20px 24px;
 }
 
-.checkout-icon-container {
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #f0f0f0;
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
-}
-
-@media (max-width: 576px) {
-  .checkout-card {
-    padding: 16px;
-  }
-
-  .checkout-icon-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .btn-outline-primary {
-    width: 100%;
-  }
 }
