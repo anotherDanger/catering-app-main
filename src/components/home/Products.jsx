@@ -1,40 +1,49 @@
-import { useEffect, useState, useRef } from "react"
-import ModalProduct from "./ModalProduct"
-import getProducts from "../../api/getProducts"
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
+import { useEffect, useState, useRef } from "react";
+import ModalProduct from "./ModalProduct";
+import getProducts, { getProductImage } from "../../api/products";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 function Products() {
-  const [products, setProducts] = useState([])
-  const [selectedProduct, setSelectedProduct] = useState(null)
-  const modalRef = useRef(null)
+  const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [imageURLs, setImageURLs] = useState({});
+  const modalRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getProducts()
-      setProducts(data)
-    }
-    fetchData()
-  }, [])
+      const data = await getProducts();
+      setProducts(data || []);
+      const imageMap = {};
+      for (const product of data || []) {
+        if (product.image_metadata) {
+          const url = await getProductImage(product.image_metadata);
+          imageMap[product.product_id] = url;
+        }
+      }
+      setImageURLs(imageMap);
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (selectedProduct && modalRef.current) {
-      const modal = window.bootstrap.Modal.getOrCreateInstance(modalRef.current)
-      modal.show()
+      const modal = window.bootstrap.Modal.getOrCreateInstance(modalRef.current);
+      modal.show();
     }
-  }, [selectedProduct])
+  }, [selectedProduct]);
 
   const openModal = (product) => {
-    setSelectedProduct(product)
-  }
+    setSelectedProduct(product);
+  };
 
   const closeModal = () => {
     if (modalRef.current) {
-      const modal = window.bootstrap.Modal.getInstance(modalRef.current)
-      if (modal) modal.hide()
+      const modal = window.bootstrap.Modal.getInstance(modalRef.current);
+      if (modal) modal.hide();
     }
-    setSelectedProduct(null)
-  }
+    setSelectedProduct(null);
+  };
 
   return (
     <>
@@ -62,7 +71,7 @@ function Products() {
                 <SwiperSlide key={product.product_id || index}>
                   <div className="card crop-img">
                     <img
-                      src={product.image_metadata || "../img-products/sample.jpg"}
+                      src={imageURLs[product.product_id] || "../img-products/sample.jpg"}
                       className="card-image card-img-top"
                       alt={product.product_name}
                     />
@@ -85,7 +94,7 @@ function Products() {
       </div>
       <ModalProduct product={selectedProduct} onClose={closeModal} modalRef={modalRef} />
     </>
-  )
+  );
 }
 
-export default Products
+export default Products;
