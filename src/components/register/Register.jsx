@@ -9,13 +9,15 @@ const Register = () => {
     last_name: '',
     username: '',
     password: '',
-    password2: ''
+    password2: '',
+    no_hp: ''
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -27,12 +29,18 @@ const Register = () => {
       return;
     }
 
+    if (form.no_hp.length > 12) {
+      setError('Nomor HP maksimal 12 digit');
+      return;
+    }
+
     try {
       await registerUser({
         first_name: form.first_name,
         last_name: form.last_name,
         username: form.username,
-        password: form.password
+        password: form.password,
+        no_hp: form.no_hp
       });
       navigate('/');
     } catch (err) {
@@ -98,6 +106,20 @@ const Register = () => {
                     onChange={handleChange}
                     required
                     placeholder="Username"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="no_hp" className="form-label">Nomor HP</label>
+                  <input
+                    type="text"
+                    name="no_hp"
+                    className="form-control"
+                    id="no_hp"
+                    value={form.no_hp}
+                    onChange={handleChange}
+                    required
+                    maxLength={12}
+                    placeholder="Nomor HP"
                   />
                 </div>
                 <div className="mb-3">

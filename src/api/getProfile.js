@@ -87,14 +87,14 @@ export async function loginUser({ username, password }) {
   }
 }
 
-export async function registerUser({ first_name, last_name, username, password }) {
+export async function registerUser({ first_name, last_name, username, password, no_hp }) {
   try {
     const response = await fetch("https://khatering.shop/user/v1/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ first_name, last_name, username, password }),
+      body: JSON.stringify({ first_name, last_name, username, password, no_hp }),
       credentials: "include",
     });
 
