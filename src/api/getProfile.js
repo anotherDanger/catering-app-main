@@ -60,7 +60,7 @@ export async function loginUser({ username, password }) {
 
     await response.json();
 
-    const authResponse = await fetch("https://khatering/v1/auth", {
+    const authResponse = await fetch("https://khatering.shop/v1/auth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
