@@ -19,7 +19,7 @@ async function getProducts() {
 }
 
 export async function getProductImage(filename) {
-  const response = await fetch(`https://khatering.shop/images/${filename}`, {
+  const response = await fetch(`https://khatering.shop/user/images/${filename}`, {
     method: "GET"
   });
 
