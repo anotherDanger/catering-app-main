@@ -36,7 +36,7 @@ function OffCanvasCart() {
     if (item.quantity >= item.product_stock) return
     const username = localStorage.getItem('user')
     const token = localStorage.getItem('access_token')
-    const response = await fetch(`https://khatering.netlify/user/v1/cart/${username}/1`, {
+    const response = await fetch(`https://khatering.shop/user/v1/cart/${username}/1`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
