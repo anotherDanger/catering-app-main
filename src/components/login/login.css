@@ -1,7 +1,6 @@
-/* Login Page Container */
 .login-page-wrapper {
   min-height: 100vh;
-  background-image: url('#'); /* Ganti '#' dengan URL gambar */
+  background-image: url('#');
   background-size: 70% auto;
   background-repeat: no-repeat;
   background-position: center;
@@ -13,7 +12,6 @@
   overflow: auto;
 }
 
-/* Login Card */
 .login-card {
   width: 100%;
   max-width: 400px;
@@ -23,7 +21,6 @@
   overflow: hidden;
 }
 
-/* Header */
 .login-card-header {
   background-color: #f8f9fa;
   padding: 20px;
@@ -32,12 +29,10 @@
   font-weight: bold;
 }
 
-/* Card Body */
 .login-card-body {
   padding: 20px;
 }
 
-/* Buttons */
 .login-btn {
   background-color: #ff6600;
   color: #ffffff;
@@ -54,14 +49,12 @@
   background-color: #D78325;
 }
 
-/* Error Message */
 .login-error {
   color: red;
   font-style: italic;
   margin-bottom: 10px;
 }
 
-/* Responsive */
 @media (max-width: 576px) {
   .login-card {
     max-width: 100%;
