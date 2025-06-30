@@ -48,7 +48,7 @@
     margin-left: 90px;
 }
 .banner{
-    background: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.ac-illust.com%2Fclip-art%2F24113282%2Fnasi-goreng-bento&psig=AOvVaw2Ia14I86rwYWUymgphubF8&ust=1751392516024000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOjyhNrbmY4DFQAAAAAdAAAAABAL')no-repeat center center;
+    background: url('./images/banner.png')no-repeat center center;
     background-size: cover;
     padding-top: 10%;
     padding-bottom: 10%;
