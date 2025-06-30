@@ -1,75 +1,71 @@
 .checkout-container {
-    padding: 20px;
-    max-width: 100%;
-    box-sizing: border-box;
+  padding: 20px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .checkout-card {
-    max-width: 600px;
-    margin: 20px auto;
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: row;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.checkout-card-img {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+  max-width: 600px;
+  margin: 20px auto;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .checkout-card-body {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .checkout-card-title {
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-weight: 600;
-    font-size: 1.5rem;
-    border-radius: 4px 4px 0 0;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 20px;
 }
 
 .checkout-form-group {
-    margin-bottom: 20px;
-    width: 100%;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .checkout-icon-container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 @media (max-width: 768px) {
-    .checkout-card {
-        flex-direction: column;
-        max-width: 100%;
-        margin: 10px;
-    }
-    .checkout-card-img,
-    .checkout-card-body {
-        padding: 15px;
-    }
-    .checkout-card-title {
-        font-size: 1.25rem;
-        padding: 8px;
-    }
-    .checkout-icon-container {
-        justify-content: center;
-    }
+  .checkout-card {
+    margin: 10px;
+    border-radius: 8px;
+  }
+
+  .checkout-card-body {
+    padding: 16px;
+  }
+
+  .checkout-card-title {
+    font-size: 1.25rem;
+    padding: 10px;
+  }
+
+  .checkout-icon-container {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .checkout-icon-container button {
+    flex: 1 1 100%;
+  }
 }

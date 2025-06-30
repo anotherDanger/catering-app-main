@@ -46,13 +46,10 @@ function ModalProduct({ product, onClose, modalRef }) {
   }
 
   const increment = () => {
-    setQuantity((q) => {
-      if (!product) return q
-      return q < product.product_stock ? q + 1 : q
-    })
+    setQuantity(q => product && q < product.product_stock ? q + 1 : q)
   }
 
-  const decrement = () => setQuantity((q) => (q > 1 ? q - 1 : 1))
+  const decrement = () => setQuantity(q => (q > 1 ? q - 1 : 1))
 
   const handleQuantityChange = (e) => {
     if (!product) return
@@ -93,10 +90,10 @@ function ModalProduct({ product, onClose, modalRef }) {
       aria-hidden="true"
       ref={modalRef}
     >
-      <div className="modal-dialog">
+      <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content">
           <div className="modal-header">
-            <h1 className="modal-title fs-5">Menu Produk</h1>
+            <h1 className="modal-title fs-5">{product.product_name}</h1>
             <button
               type="button"
               className="btn-close"
@@ -105,53 +102,40 @@ function ModalProduct({ product, onClose, modalRef }) {
             ></button>
           </div>
           <div className="modal-body">
-            <div className="row pt-4">
-              <div className="col-md-6">
+            <div className="row g-4">
+              <div className="col-12 col-md-6 d-flex justify-content-center">
                 <img
                   src={product.product_image || '../img-products/sample.jpg'}
                   alt={product.product_name}
-                  className="gmbr-popup"
+                  className="img-fluid rounded"
+                  style={{ maxHeight: '300px', objectFit: 'cover' }}
                 />
               </div>
-              <div className="col-md-6">
-                <h3>{product.product_name}</h3>
-                <p>Rp. {product.product_price.toLocaleString()}/porsi</p>
-                <div className="quantity">
-                  <button
-                    className="minus-btn"
-                    type="button"
-                    onClick={decrement}
-                  >
-                    -
-                  </button>
+              <div className="col-12 col-md-6">
+                <p className="fs-5 fw-semibold mb-1">Rp. {product.product_price.toLocaleString()}</p>
+                <p className="text-muted mb-2">Stok tersedia: {product.product_stock}</p>
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <button className="minus-btn" type="button" onClick={decrement}>-</button>
                   <input
                     type="text"
-                    className="quantity-input"
+                    className="quantity-input form-control text-center"
                     value={quantity}
                     onChange={handleQuantityChange}
+                    style={{ width: '70px' }}
                   />
-                  <button
-                    className="plus-btn"
-                    type="button"
-                    onClick={increment}
-                  >
-                    +
-                  </button>
+                  <button className="plus-btn" type="button" onClick={increment}>+</button>
                 </div>
-                <p className="mt-2">Stok tersedia: {product.product_stock}</p>
-              </div>
-              <div className="col-md-12 pt-3">
-                <p>Deskripsi :</p>
-                <p>{product.product_description}</p>
+                <p className="mt-3 mb-1 fw-semibold">Deskripsi:</p>
+                <p className="text-secondary" style={{ fontSize: '0.9rem' }}>{product.product_description}</p>
               </div>
             </div>
           </div>
-          <div className="modal-footer text-center">
+          <div className="modal-footer d-flex flex-column flex-md-row justify-content-center gap-2">
             {isLoggedIn ? (
               <>
                 <button
                   type="button"
-                  className="btn btn-outline-primary"
+                  className="btn btn-outline-primary w-100 w-md-auto"
                   onClick={() =>
                     handleNavigate('/v1/checkout', {
                       product,
@@ -164,7 +148,7 @@ function ModalProduct({ product, onClose, modalRef }) {
                 </button>
                 <button
                   type="button"
-                  className="btn-popup btn-add-to-cart"
+                  className="btn-popup btn-add-to-cart w-100 w-md-auto"
                   onClick={handleAddToCartClick}
                 >
                   Tambahkan Ke Keranjang
@@ -174,14 +158,14 @@ function ModalProduct({ product, onClose, modalRef }) {
               <>
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="btn btn-primary w-100 w-md-auto"
                   onClick={() => handleNavigate('/v1/login')}
                 >
                   Masuk
                 </button>
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="btn btn-secondary w-100 w-md-auto"
                   onClick={() => handleNavigate('/v1/register')}
                 >
                   Buat Akun

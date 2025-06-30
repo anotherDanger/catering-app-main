@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { fetchDistrictsByRegency, fetchVillagesByDistrict } from '../../api/wilayah'
+import { postCheckout } from '../../api/checkout'
 import './checkout.css'
-import { postCheckout } from '../../api/checkout.js'
 
 const Checkout = () => {
   const location = useLocation()
@@ -74,7 +74,7 @@ const Checkout = () => {
     <div className="checkout-container">
       <div className="checkout-card">
         <div className="checkout-card-body">
-          <h3>Pembayaran</h3>
+          <div className="checkout-card-title">Pembayaran</div>
           <form onSubmit={handleSubmit}>
             <div className="checkout-form-group">
               <label htmlFor="nama">Nama</label>
