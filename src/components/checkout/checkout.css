@@ -1,71 +1,62 @@
-.checkout-container {
-  padding: 20px;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.checkout-card {
-  max-width: 600px;
-  margin: 20px auto;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.checkout-card-body {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.checkout-card-title {
-  background-color: #007bff;
+.btn-primary {
+  background-color: #394034;
+  border-color: #394034;
   color: white;
-  text-align: center;
-  padding: 12px;
-  font-weight: 600;
-  font-size: 1.5rem;
-  border-radius: 6px;
-  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
 }
 
-.checkout-form-group {
-  margin-bottom: 20px;
-  width: 100%;
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #2e322d;
+  border-color: #2e322d;
+  color: white;
 }
 
-.checkout-icon-container {
+.btn-outline-primary {
+  border-color: #d68224;
+  color: #d68224;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: #d68224;
+  color: white;
+}
+
+.modal-content {
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+.modal-header {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 16px 24px;
+}
+
+.modal-body {
+  padding: 20px 24px;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #f0f0f0;
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
 }
 
-@media (max-width: 768px) {
-  .checkout-card {
-    margin: 10px;
-    border-radius: 8px;
-  }
+.btn-popup {
+  background-color: #d68224;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
 
-  .checkout-card-body {
-    padding: 16px;
-  }
-
-  .checkout-card-title {
-    font-size: 1.25rem;
-    padding: 10px;
-  }
-
-  .checkout-icon-container {
-    justify-content: center;
-    gap: 12px;
-  }
-
-  .checkout-icon-container button {
-    flex: 1 1 100%;
-  }
+.btn-popup:hover {
+  background-color: #394034;
+  color: white;
 }
