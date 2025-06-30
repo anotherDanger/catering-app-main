@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import ModalProduct from "./ModalProduct";
-import getProducts, { getProductImage } from "../../api/products";
+import getProducts, { getProductImage } from "../../api/getProducts.js";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
