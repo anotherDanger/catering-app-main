@@ -44,7 +44,7 @@ export async function logoutUser() {
 
 export async function loginUser({ username, password }) {
   try {
-    const response = await fetch("https://khatering/v1/login", {
+    const response = await fetch("https://khatering.shop/user/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
