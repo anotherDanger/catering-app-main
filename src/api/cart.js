@@ -90,7 +90,7 @@ export const decreaseCartItem = async (username, productId, quantity, token) => 
 
   try {
     const response = await fetch(
-      `https://khatering.shop/user/v1/cart/${username}/${productId}/${quantity}`,
+      `https://khatering.shop/user/api/v1/cart/${username}/${productId}/${quantity}`,
       {
         method: 'DELETE',
         headers: {
