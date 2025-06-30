@@ -1,5 +1,5 @@
 export async function tryRefreshToken() {
-  const refreshResponse = await fetch("https://khatering/v1/refresh", {
+  const refreshResponse = await fetch("https://khatering.shop/v1/refresh", {
     method: "POST",
     credentials: "include",
   });
@@ -31,7 +31,7 @@ export async function checkLogin() {
 
 export async function logoutUser() {
   try {
-    await fetch("https://khatering/v1/logout", {
+    await fetch("https://khatering.shop/v1/logout", {
       method: "POST",
       credentials: "include",
     });
