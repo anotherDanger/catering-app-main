@@ -65,13 +65,13 @@ const TentangKami = () => {
         <div className="w-full">
           <div data-aos="fade-left" className="grid grid-cols-6 bg-orange-400 rounded-l-full pl-25">
             <div className="col-span-6 col-start-2">
-              <img src={img1} alt="" className="h-81 w-60 rounded-2xl border-8 border-white" />
+              {/* <img src={img1} alt="" className="h-81 w-60 rounded-2xl border-8 border-white" /> */}
             </div>
             <div className="col-start-1 col-end-3">
-              <img src={img2} alt="" className="h-70 w-68 rounded-2xl rounded-tr-none border-8 border-white" />
+              {/* <img src={img2} alt="" className="h-70 w-68 rounded-2xl rounded-tr-none border-8 border-white" /> */}
             </div>
             <div className="col-span-4 col-end-7">
-              <img src={img3} alt="" className="h-70 w-80 rounded-2xl rounded-tl-none border-8 border-white" />
+              {/* <img src={img3} alt="" className="h-70 w-80 rounded-2xl rounded-tl-none border-8 border-white" /> */}
             </div>
           </div>
         </div>
