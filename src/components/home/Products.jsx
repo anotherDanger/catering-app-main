@@ -3,6 +3,7 @@ import ModalProduct from "./ModalProduct";
 import getProducts, { getProductImage } from "../../api/getProducts.js";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import './products.css'
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -90,6 +91,19 @@ function Products() {
               ))}
             </Swiper>
           )}
+          <div className="custom-package-box mt-5">
+            <p className="custom-package-text">
+              Butuh paket khusus? Kami siap bantu sesuai kebutuhan Anda!
+            </p>
+            <a
+              href="https://wa.me/6281234567890"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-contact"
+            >
+              Hubungi
+            </a>
+          </div>
         </div>
       </div>
       <ModalProduct product={selectedProduct} onClose={closeModal} modalRef={modalRef} />
