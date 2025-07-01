@@ -1,33 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addToCart } from '../../api/cart'
+import getProducts, { getProductImage } from '../../api/products'
 
 function ModalProduct({ product, onClose, modalRef }) {
   const navigate = useNavigate()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [quantity, setQuantity] = useState(1)
+  const [productImageURL, setProductImageURL] = useState('')
 
   useEffect(() => {
     const token = localStorage.getItem('access_token')
     setIsLoggedIn(!!token)
     setQuantity(1)
+    if (product && product.image_metadata) {
+      loadImage(product.image_metadata)
+    }
   }, [product])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getProducts();
-      setProducts(data || []);
-      const imageMap = {};
-      for (const product of data || []) {
-        if (product.image_metadata) {
-          const url = await getProductImage(product.image_metadata);
-          imageMap[product.product_id] = url;
-        }
-      }
-      setImageURLs(imageMap);
-    };
-    fetchData();
-  }, []);
+  const loadImage = async (imageMeta) => {
+    const url = await getProductImage(imageMeta)
+    setProductImageURL(url)
+  }
 
   useEffect(() => {
     if (!modalRef.current) return
@@ -121,7 +115,7 @@ function ModalProduct({ product, onClose, modalRef }) {
             <div className="row g-4">
               <div className="col-12 col-md-6 d-flex justify-content-center">
                 <img
-                  src={product.product_image || '../img-products/sample.jpg'}
+                  src={productImageURL || '../img-products/sample.jpg'}
                   alt={product.product_name}
                   className="img-fluid rounded"
                   style={{ maxHeight: '300px', objectFit: 'cover' }}
