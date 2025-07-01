@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addToCart } from '../../api/cart'
-import getProducts, { getProductImage } from '../../api/products'
+import getProducts, { getProductImage } from '../../api/getProducts.js'
 
 function ModalProduct({ product, onClose, modalRef }) {
   const navigate = useNavigate()
