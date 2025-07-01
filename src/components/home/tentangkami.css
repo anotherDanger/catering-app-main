@@ -1,0 +1,111 @@
+#tentang {
+  background-color: #fff7f0;
+}
+
+.mb-20 {
+  margin-bottom: 5rem;
+}
+
+.pt-20 {
+  padding-top: 5rem;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.font-serif {
+  font-family: serif;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.leading-relaxed {
+  line-height: 1.625;
+}
+
+.md\:flex {
+  display: flex;
+}
+
+.md\:space-x-10 > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 2.5rem;
+}
+
+.w-4\/5 {
+  width: 80%;
+}
+
+.mb-16 {
+  margin-bottom: 4rem;
+}
+
+.bg-orange-400 {
+  background-color: #fb923c;
+}
+
+.rounded-r-3xl {
+  border-top-right-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+}
+
+.rounded-l-3xl {
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
+}
+
+.p-12 {
+  padding: 3rem;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+              0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
