@@ -49,7 +49,7 @@ function Products() {
     <>
       <div className="container-fluid pt-5 menu" id="menu">
         <div className="container text-center">
-          <h2 className="mt-3">Produk</h2>
+          <h2 className="mt-3">Menu Andalan Kami</h2>
           {products.length === 0 ? (
             <p>Loading...</p>
           ) : (
