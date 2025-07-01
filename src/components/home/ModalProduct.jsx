@@ -14,6 +14,22 @@ function ModalProduct({ product, onClose, modalRef }) {
   }, [product])
 
   useEffect(() => {
+    const fetchData = async () => {
+      const data = await getProducts();
+      setProducts(data || []);
+      const imageMap = {};
+      for (const product of data || []) {
+        if (product.image_metadata) {
+          const url = await getProductImage(product.image_metadata);
+          imageMap[product.product_id] = url;
+        }
+      }
+      setImageURLs(imageMap);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     if (!modalRef.current) return
     const modalEl = modalRef.current
     const handleHidden = () => {
