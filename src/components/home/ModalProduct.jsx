@@ -126,7 +126,7 @@ function ModalProduct({ product, onClose, modalRef }) {
                   <button className="plus-btn" type="button" onClick={increment}>+</button>
                 </div>
                 <p className="mt-3 mb-1 fw-semibold">Deskripsi:</p>
-                <p className="text-secondary" style={{ fontSize: '0.9rem' }}>{product.product_description}</p>
+                <p className="text-secondary" style={{ fontSize: '0.9rem' }}>{product.description}</p>
               </div>
             </div>
           </div>
