@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getCart, deleteCartItem, decreaseCartItem } from '../../api/cart'
+import { getCart, deleteCartItem, decreaseCartItem, addToCart } from '../../api/cart'
 
 function OffCanvasCart() {
   const [cart, setCart] = useState([])
@@ -9,64 +9,72 @@ function OffCanvasCart() {
 
   const fetchCart = async () => {
     setLoading(true)
-    const username = localStorage.getItem('user')
-    const token = localStorage.getItem('access_token')
-    const result = await getCart(username, token)
-    if (result.success) {
-      setCart(result.data)
+    try {
+      const username = localStorage.getItem('user')
+      if (username) {
+        const data = await getCart(username)
+        setCart(data)
+      } else {
+        setCart([])
+      }
+    } catch (error) {
+      console.error(error)
+      setCart([])
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   const handleDelete = async (productId) => {
-    const username = localStorage.getItem('user')
-    const token = localStorage.getItem('access_token')
-    await deleteCartItem(username, productId, token)
-    fetchCart()
+    try {
+      const username = localStorage.getItem('user')
+      await deleteCartItem(username, productId)
+      fetchCart()
+    } catch (error) {
+      console.error(error)
+      alert(error.message)
+    }
   }
 
   const handleDecrease = async (productId) => {
-    const username = localStorage.getItem('user')
-    const token = localStorage.getItem('access_token')
-    await decreaseCartItem(username, productId, 1, token)
-    fetchCart()
+    try {
+      const username = localStorage.getItem('user')
+      await decreaseCartItem(username, productId, 1)
+      fetchCart()
+    } catch (error) {
+      console.error(error)
+      alert(error.message)
+    }
   }
 
   const handleIncrease = async (item) => {
     if (item.quantity >= item.product_stock) return
-    const username = localStorage.getItem('user')
-    const token = localStorage.getItem('access_token')
-    const response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}/1`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        product_id: item.product_id,
-        product_name: item.product_name,
-        product_price: item.price,
+    try {
+      const username = localStorage.getItem('user')
+      await addToCart({
+        product: {
+          product_id: item.product_id,
+          product_name: item.product_name,
+          product_price: item.price,
+        },
         quantity: 1,
-        total_price: item.price * 1,
-      }),
-    })
-    if (response.status === 400) {
-      alert('Jumlah melebihi stok produk.')
-      return
-    }
-    if (response.ok) {
+        username: username,
+      })
       fetchCart()
+    } catch (error) {
+      console.error(error)
+      alert(error.message)
     }
   }
 
   useEffect(() => {
     const offcanvas = document.getElementById('offCanfasCart')
-    const handleShow = () => {
-      fetchCart()
-    }
-    offcanvas.addEventListener('show.bs.offcanvas', handleShow)
-    return () => {
-      offcanvas.removeEventListener('show.bs.offcanvas', handleShow)
+    if (offcanvas) {
+      const handleShow = () => fetchCart()
+      offcanvas.addEventListener('show.bs.offcanvas', handleShow)
+      return () => {
+        offcanvas.removeEventListener('show.bs.offcanvas', handleShow)
+      }
     }
   }, [])
 
@@ -92,21 +100,21 @@ function OffCanvasCart() {
         </div>
         <div className="offcanvas-body" id="cartBody">
           {loading ? (
-            'Loading...'
+            <div className="text-center">Loading...</div>
           ) : cart.length === 0 ? (
-            'Keranjang kosong'
+            <div className="text-center">Keranjang kosong</div>
           ) : (
             <ul className="list-group">
-              {cart.map((item, index) => (
+              {cart.map((item) => (
                 <li
-                  key={index}
+                  key={item.product_id}
                   className="list-group-item d-flex justify-content-between align-items-center flex-column flex-md-row"
                 >
-                  <div>
+                  <div className="mb-2 mb-md-0">
                     <div>{item.product_name}</div>
-                    <small>{item.quantity} × Rp{item.price.toLocaleString()}</small>
+                    <small>{item.quantity} &times; Rp{item.price.toLocaleString()}</small>
                   </div>
-                  <div className="d-flex align-items-center mt-2 mt-md-0">
+                  <div className="d-flex align-items-center">
                     <button
                       className="btn btn-sm btn-secondary me-1"
                       onClick={() => handleDecrease(item.product_id)}
@@ -121,7 +129,7 @@ function OffCanvasCart() {
                     >
                       +
                     </button>
-                    <span className="me-3">
+                    <span className="me-3 fw-bold">
                       Rp{(item.price * item.quantity).toLocaleString()}
                     </span>
                     <button
