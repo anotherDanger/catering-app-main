@@ -10,8 +10,9 @@
   padding-top: 5rem;
 }
 
-.w-2\/3 {
-  width: 66.666667%;
+.w-2\/3,
+.w-4\/5 {
+  width: 95%;
 }
 
 .mx-auto {
@@ -28,8 +29,8 @@
 }
 
 .text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .font-serif {
@@ -49,20 +50,8 @@
   line-height: 1.625;
 }
 
-.md\:flex {
-  display: flex;
-}
-
-.md\:space-x-10 > :not([hidden]) ~ :not([hidden]) {
-  margin-left: 2.5rem;
-}
-
-.w-4\/5 {
-  width: 80%;
-}
-
 .mb-16 {
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .bg-orange-400 {
@@ -80,7 +69,7 @@
 }
 
 .p-12 {
-  padding: 3rem;
+  padding: 1.5rem;
 }
 
 .flex-1 {
@@ -89,7 +78,7 @@
 
 .shadow-lg {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-              0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .text-2xl {
@@ -108,4 +97,35 @@
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .w-2\/3 {
+    width: 66.666667%;
+  }
+
+  .w-4\/5 {
+    width: 80%;
+  }
+
+  .mb-16 {
+    margin-bottom: 4rem;
+  }
+
+  .p-12 {
+    padding: 3rem;
+  }
+
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:space-x-10 > :not([hidden]) ~ :not([hidden]) {
+    margin-left: 2.5rem;
+  }
 }

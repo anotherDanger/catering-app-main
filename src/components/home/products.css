@@ -1,13 +1,15 @@
 .custom-package-box {
   background-color: #fff4e0;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 1rem;
-  margin-top: 3rem;
+  margin-top: 2.5rem;
+  text-align: center;
 }
 
 .custom-package-text {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  margin-bottom: 1.5rem;
   color: #333;
 }
 
@@ -17,8 +19,9 @@
   border: none;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
+  font-weight: 600;
   border-radius: 0.5rem;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   text-decoration: none;
   display: inline-block;
 }
@@ -26,4 +29,16 @@
 .btn-contact:hover {
   background-color: #1ebe5d;
   color: white;
+  transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  .custom-package-box {
+    padding: 2rem;
+    margin-top: 3rem;
+  }
+
+  .custom-package-text {
+    font-size: 1.25rem;
+  }
 }
