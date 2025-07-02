@@ -4,12 +4,25 @@ body {
 }
 
 .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
     padding: 0.5rem 1rem;
 }
 
 .navbar-brand {
     font-size: 1.25rem;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+    margin-right: auto;
+}
+
+.navbar-toggler {
+    flex-shrink: 0;
 }
 
 .navbar-brown {
@@ -24,15 +37,6 @@ body {
 
 .navbar-nav .nav-link:hover {
     color: #D78325;
-}
-
-.navbar-nav .nav-link.active.d-inline-block i {
-    margin-left: 10px;
-}
-
-.btn-profile:hover, .btn-cart:hover {
-    background-color: #D78325 !important;
-    border-color: #D78325 !important;
 }
 
 .btn {
@@ -65,6 +69,7 @@ body {
 .btn-primary { background-color: #D78325; border-color: #D78325; color: white; }
 .btn-primary:hover { background-color: #394034; border-color: #394034; color: white; }
 .btn-danger { background-color: #d72525; border-color: #d72525; color: white; }
+.btn-profile:hover, .btn-cart:hover { background-color: #D78325 !important; border-color: #D78325 !important; }
 
 .btn-checkout { width: 100%; margin: 0 0 10px 0; }
 .btn-login { width: 100%; margin: 20px 0 10px 0; }
@@ -109,24 +114,29 @@ body {
 }
 
 .banner {
-    background: url('./images/banner.png') no-repeat center center;
-    background-size: cover;
-    padding: 20vh 5%;
-    text-align: center;
+    background: url('./images/banner.png') no-repeat right center;
+    background-size: 55% auto;
+    padding: 15vh 5%;
+    text-align: left;
     display: flex;
     align-items: center;
-    justify-content: center;
+    min-height: 400px;
+}
+
+.banner .container {
+    width: 50%;
+    margin-left: 0;
 }
 
 .banner h4 {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
     color: white;
 }
 
 .banner h1 {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
 }
 
 .menu, .about, .kontak, .footer {
@@ -176,6 +186,9 @@ body {
     .navbar-nav .nav-link { font-size: 1rem; }
     .btn { font-size: 1rem; }
     .emaill, .passwordd { padding-left: 20px; }
+    .banner {
+        min-height: auto;
+    }
     .banner h4 { font-size: 3.5rem; }
     .banner h1 { font-size: 2rem; }
     .card-image { height: 250px; padding: 10px; }
@@ -190,7 +203,15 @@ body {
     .btn-login { width: 60%; margin: 30px 0 10px 90px; }
     .btn-checkout { width: 90%; margin: 0 0 10px 25px; }
     .img-cart { height: 100px; width: 100px; margin-left: 20px; }
-    .banner { background-position: right center; background-size: contain; padding: 5% 0; text-align: left; justify-content: flex-start; }
+    .banner {
+        background-size: contain;
+        padding: 5% 0;
+        justify-content: flex-start;
+    }
+    .banner .container {
+        width: auto;
+        margin-left: initial;
+    }
     .banner h4 { font-size: 4.5rem; }
     .banner h1 { font-size: 2.5rem; }
     .card-image { height: 350px; padding: 20px; }
