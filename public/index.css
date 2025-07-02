@@ -1,6 +1,14 @@
-body {
-    font-family: Arial, sans-serif;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html, body {
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    font-family: Arial, sans-serif;
 }
 
 .navbar {
@@ -16,6 +24,11 @@ body {
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
 }
 
 .navbar-brand {
@@ -24,6 +37,7 @@ body {
     flex-shrink: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 60%;
 }
 
 .navbar-toggler {
@@ -90,15 +104,47 @@ body {
     min-width: 40px;
 }
 
-.btn-primary { background-color: #D78325; border-color: #D78325; color: white; }
-.btn-primary:hover { background-color: #394034; border-color: #394034; color: white; }
-.btn-danger { background-color: #d72525; border-color: #d72525; color: white; }
+.btn-primary {
+    background-color: #D78325;
+    border-color: #D78325;
+    color: white;
+}
 
-.btn-checkout { width: 100%; margin: 0 0 10px 0; }
-.btn-login { width: 100%; margin: 20px 0 10px 0; }
-.btn-view-product, .btn-popup { margin-bottom: 10px; }
-.btn-kirim-pesan { background-color: #D78325; color: white; }
-.btn-kirim-pesan:hover { background-color: #394034; color: white; }
+.btn-primary:hover {
+    background-color: #394034;
+    border-color: #394034;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #d72525;
+    border-color: #d72525;
+    color: white;
+}
+
+.btn-checkout {
+    width: 100%;
+    margin: 0 0 10px 0;
+}
+
+.btn-login {
+    width: 100%;
+    margin: 20px 0 10px 0;
+}
+
+.btn-view-product, .btn-popup {
+    margin-bottom: 10px;
+}
+
+.btn-kirim-pesan {
+    background-color: #D78325;
+    color: white;
+}
+
+.btn-kirim-pesan:hover {
+    background-color: #394034;
+    color: white;
+}
 
 .plus-btn, .minus-btn {
     cursor: pointer;
@@ -167,16 +213,50 @@ h1 {
     padding: 50px 0;
 }
 
-.about { background-color: #99847D; }
-.kontak { background-color: #935831; color: white; }
-.footer { background-color: #394034; padding-top: 25px; padding-bottom: 25px; }
+.about {
+    background-color: #99847D;
+}
 
-.card-image { height: 200px; padding: 5px; object-fit: cover; }
-.crop-img img, .gmbr-popup { object-fit: contain; max-width: 100%; height: auto; }
-.img-cart { height: 60px; width: 60px; margin-left: 5px; }
-.img-about { margin: 0 auto 20px auto; display: block; max-width: 80%; }
+.kontak {
+    background-color: #935831;
+    color: white;
+}
 
-.modal-footer { display: flex; justify-content: center; flex-wrap: wrap; }
+.footer {
+    background-color: #394034;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.card-image {
+    height: 200px;
+    padding: 5px;
+    object-fit: cover;
+}
+
+.crop-img img, .gmbr-popup {
+    object-fit: contain;
+    max-width: 100%;
+    height: auto;
+}
+
+.img-cart {
+    height: 60px;
+    width: 60px;
+    margin-left: 5px;
+}
+
+.img-about {
+    margin: 0 auto 20px auto;
+    display: block;
+    max-width: 80%;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
 .lingkaran {
     display: flex;
@@ -189,22 +269,81 @@ h1 {
     background-color: #E5DCD3;
 }
 
-.album { height: auto; width: 100%; padding: 10px; transition: transform 0.3s ease; }
-.gallery-item { overflow: hidden; }
-.gallery-item:hover .album { transform: scale(1.1); }
+.album {
+    height: auto;
+    width: 100%;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
 
-.custom-file-upload-container { display: flex; flex-direction: column; justify-content: center; align-items: center; }
-.custom-file-upload-foto img { border-radius: 50%; width: 90px; height: 90px; margin: 1rem 0; }
-.custom-file-upload-foto p { margin-bottom: 1rem; }
-.custom-file-upload input[type="file"] { display: none; }
-.custom-file-upload label { display: inline-block; background-color: #3498db; color: #fff; padding: 8px 20px; border-radius: 4px; cursor: pointer; border: none; }
-.custom-file-upload label:hover { background-color: #2980b9; }
+.gallery-item {
+    overflow: hidden;
+}
 
-.link-logout a { color: red; text-decoration: none; font-size: 18px; font-weight: bold; display: flex; align-items: center; justify-content: center; margin: 2rem; }
-.link-logout a:hover { color: #800000; }
+.gallery-item:hover .album {
+    transform: scale(1.1);
+}
 
-.history-icon { margin: 0 10px; }
-.offcanvas-header { display: flex; justify-content: space-between; align-items: center; }
+.custom-file-upload-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-file-upload-foto img {
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    margin: 1rem 0;
+}
+
+.custom-file-upload-foto p {
+    margin-bottom: 1rem;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload label {
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+
+.custom-file-upload label:hover {
+    background-color: #2980b9;
+}
+
+.link-logout a {
+    color: red;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem;
+}
+
+.link-logout a:hover {
+    color: #800000;
+}
+
+.history-icon {
+    margin: 0 10px;
+}
+
+.offcanvas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 @media (max-width: 991.98px) {
     .navbar > .container,
