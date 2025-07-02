@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addToCart } from '../../api/cart'
-import getProducts, { getProductImage } from '../../api/getProducts.js'
+import { getProductImage } from '../../api/getProducts.js'
 
 function ModalProduct({ product, onClose, modalRef }) {
   const navigate = useNavigate()
@@ -13,14 +13,20 @@ function ModalProduct({ product, onClose, modalRef }) {
     const token = localStorage.getItem('access_token')
     setIsLoggedIn(!!token)
     setQuantity(1)
+    setProductImageURL('')
     if (product && product.image_metadata) {
       loadImage(product.image_metadata)
     }
   }, [product])
 
   const loadImage = async (imageMeta) => {
-    const url = await getProductImage(imageMeta)
-    setProductImageURL(url)
+    try {
+      const url = await getProductImage(imageMeta)
+      setProductImageURL(url)
+    } catch (error) {
+      console.error('Failed to load product image:', error)
+      setProductImageURL('')
+    }
   }
 
   useEffect(() => {
@@ -56,38 +62,44 @@ function ModalProduct({ product, onClose, modalRef }) {
   }
 
   const increment = () => {
-    setQuantity(q => product && q < product.product_stock ? q + 1 : q)
+    setQuantity((q) => (product && q < product.product_stock ? q + 1 : q))
   }
 
-  const decrement = () => setQuantity(q => (q > 1 ? q - 1 : 1))
+  const decrement = () => setQuantity((q) => (q > 1 ? q - 1 : 1))
 
   const handleQuantityChange = (e) => {
     if (!product) return
-    const val = parseInt(e.target.value)
-    if (!isNaN(val) && val > 0 && val <= product.product_stock) {
-      setQuantity(val)
+    const val = parseInt(e.target.value, 10)
+    if (isNaN(val) || val < 1) {
+      setQuantity(1)
     } else if (val > product.product_stock) {
       setQuantity(product.product_stock)
+    } else {
+      setQuantity(val)
     }
   }
 
   const handleAddToCartClick = async () => {
-    const token = localStorage.getItem('access_token')
-    if (!token) {
+    if (!isLoggedIn) {
       alert('Silakan login terlebih dahulu')
       return
     }
-    const user = localStorage.getItem('user')
-    if (!user) {
-      alert('User tidak ditemukan')
+    const username = localStorage.getItem('user')
+    if (!username) {
+      alert('User tidak ditemukan, silakan login ulang.')
       return
     }
     if (!quantity || quantity < 1 || quantity > product.product_stock) {
       alert('Jumlah tidak valid atau melebihi stok')
       return
     }
-    const result = await addToCart({ product, quantity, token, username: user })
-    alert(result.message)
+    try {
+      await addToCart({ product, quantity, username })
+      alert('Produk berhasil ditambahkan ke keranjang!')
+      closeModal()
+    } catch (error) {
+      alert(error.message || 'Gagal menambahkan produk.')
+    }
   }
 
   if (!product) return null
@@ -113,30 +125,40 @@ function ModalProduct({ product, onClose, modalRef }) {
           </div>
           <div className="modal-body">
             <div className="row g-4">
-              <div className="col-12 col-md-6 d-flex justify-content-center">
+              <div className="col-12 col-md-6 d-flex justify-content-center align-items-center">
                 <img
                   src={productImageURL || '../img-products/sample.jpg'}
                   alt={product.product_name}
                   className="img-fluid rounded"
-                  style={{ maxHeight: '300px', objectFit: 'cover' }}
+                  style={{
+                    maxHeight: '300px',
+                    objectFit: 'cover',
+                    width: '100%',
+                  }}
                 />
               </div>
               <div className="col-12 col-md-6">
-                <p className="fs-5 fw-semibold mb-1">Rp. {product.product_price.toLocaleString()}</p>
-                <p className="text-muted mb-2">Stok tersedia: {product.product_stock}</p>
+                <p className="fs-5 fw-semibold mb-1">
+                  Rp. {product.product_price.toLocaleString()}
+                </p>
+                <p className="text-muted mb-2">
+                  Stok tersedia: {product.product_stock}
+                </p>
                 <div className="d-flex align-items-center gap-2 mb-3">
-                  <button className="minus-btn" type="button" onClick={decrement}>-</button>
+                  <button className="btn btn-secondary" type="button" onClick={decrement}>-</button>
                   <input
                     type="text"
-                    className="quantity-input form-control text-center"
+                    className="form-control text-center"
                     value={quantity}
                     onChange={handleQuantityChange}
                     style={{ width: '70px' }}
                   />
-                  <button className="plus-btn" type="button" onClick={increment}>+</button>
+                  <button className="btn btn-secondary" type="button" onClick={increment}>+</button>
                 </div>
                 <p className="mt-3 mb-1 fw-semibold">Deskripsi:</p>
-                <p className="text-secondary" style={{ fontSize: '0.9rem' }}>{product.description}</p>
+                <p className="text-secondary" style={{ fontSize: '0.9rem' }}>
+                  {product.description}
+                </p>
               </div>
             </div>
           </div>
@@ -158,7 +180,7 @@ function ModalProduct({ product, onClose, modalRef }) {
                 </button>
                 <button
                   type="button"
-                  className="btn-popup btn-add-to-cart w-100 w-md-auto"
+                  className="btn btn-primary w-100 w-md-auto"
                   onClick={handleAddToCartClick}
                 >
                   Tambahkan Ke Keranjang
