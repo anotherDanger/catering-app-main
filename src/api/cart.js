@@ -8,17 +8,17 @@ export async function tryRefreshToken() {
     const refreshData = await refreshResponse.json();
     localStorage.setItem("access_token", refreshData.access_token);
     localStorage.setItem("user", refreshData.username);
-    return refreshData.username;
+    return true;
   }
 
   localStorage.removeItem("access_token");
   localStorage.removeItem("user");
-  return null;
+  return false;
 }
 
-export const addToCart = async ({ product, quantity, token, username }) => {
-  if (!product || !token || !username) {
-    return { success: false, message: 'Data tidak lengkap' };
+export const addToCart = async ({ product, quantity, username }) => {
+  if (!product || !username) {
+    throw new Error('Data tidak lengkap');
   }
 
   const payload = {
@@ -28,103 +28,139 @@ export const addToCart = async ({ product, quantity, token, username }) => {
     quantity: quantity,
     total_price: product.product_price * quantity,
   };
+  
+  let token = localStorage.getItem('access_token');
+  let response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}/${quantity}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
 
-  try {
-    const response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}/${quantity}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      return { success: true, message: 'Produk berhasil ditambahkan ke keranjang!' };
-    } else {
-      return { success: false, message: result.data || 'Gagal menambahkan produk.' };
+  if (response.status === 401) {
+    const refreshed = await tryRefreshToken();
+    if (refreshed) {
+      token = localStorage.getItem('access_token');
+      response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}/${quantity}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
     }
-  } catch (error) {
-    return { success: false, message: 'Terjadi kesalahan jaringan.' };
   }
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.data || 'Gagal menambahkan produk.');
+  }
+
+  return await response.json();
 };
 
-export const getCart = async (username, token) => {
-  if (!username || !token) {
-    return { success: false, message: 'Username atau token tidak tersedia.' };
+export const getCart = async (username) => {
+  if (!username) {
+    throw new Error('Username tidak tersedia.');
   }
 
-  try {
-    const response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  let token = localStorage.getItem('access_token');
+  let response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  });
 
-    const result = await response.json();
-
-    if (response.ok) {
-      return { success: true, data: result.data || [] };
-    } else {
-      return { success: false, message: result.data || 'Gagal mengambil keranjang.' };
+  if (response.status === 401) {
+    const refreshed = await tryRefreshToken();
+    if (refreshed) {
+      token = localStorage.getItem('access_token');
+      response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
     }
-  } catch (error) {
-    return { success: false, message: 'Terjadi kesalahan jaringan.' };
   }
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.data || 'Gagal mengambil keranjang.');
+  }
+
+  const result = await response.json();
+  return result.data || [];
 };
 
-export const deleteCartItem = async (username, productId, token) => {
-  if (!username || !productId || !token) {
-    return { success: false, message: 'Data tidak lengkap.' };
+export const deleteCartItem = async (username, productId) => {
+  if (!username || !productId) {
+    throw new Error('Data tidak lengkap.');
   }
 
-  try {
-    const response = await fetch(`https://khatering.shop/user/v1/cart/${username}/${productId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  let token = localStorage.getItem('access_token');
+  let response = await fetch(`https://khatering.shop/user/v1/cart/${username}/${productId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  });
 
-    const result = await response.json();
-
-    if (response.ok) {
-      return { success: true, message: result.data || 'Produk berhasil dihapus dari keranjang.' };
-    } else {
-      return { success: false, message: result.data || 'Gagal menghapus produk.' };
-    }
-  } catch (error) {
-    return { success: false, message: 'Terjadi kesalahan jaringan.' };
-  }
-};
-
-export const decreaseCartItem = async (username, productId, quantity, token) => {
-  if (!username || !productId || !quantity || !token) {
-    return { success: false, message: 'Data tidak lengkap.' };
-  }
-
-  try {
-    const response = await fetch(
-      `https://khatering.shop/user/api/v1/cart/${username}/${productId}/${quantity}`,
-      {
+  if (response.status === 401) {
+    const refreshed = await tryRefreshToken();
+    if (refreshed) {
+      token = localStorage.getItem('access_token');
+      response = await fetch(`https://khatering.shop/user/v1/cart/${username}/${productId}`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
         },
-      }
-    );
-
-    const result = await response.json();
-
-    if (response.ok) {
-      return { success: true, message: result.data || 'Quantity berhasil dikurangi.' };
-    } else {
-      return { success: false, message: result.data || 'Gagal mengurangi quantity.' };
+      });
     }
-  } catch (error) {
-    return { success: false, message: 'Terjadi kesalahan jaringan.' };
   }
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.data || 'Gagal menghapus produk dari keranjang.');
+  }
+
+  return await response.json();
+};
+
+export const decreaseCartItem = async (username, productId, quantity) => {
+  if (!username || !productId || !quantity) {
+    throw new Error('Data tidak lengkap.');
+  }
+
+  let token = localStorage.getItem('access_token');
+  let response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}/${productId}/${quantity}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  if (response.status === 401) {
+    const refreshed = await tryRefreshToken();
+    if (refreshed) {
+      token = localStorage.getItem('access_token');
+      response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}/${productId}/${quantity}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+    }
+  }
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.data || 'Gagal mengurangi kuantitas produk.');
+  }
+  
+  return await response.json();
 };
