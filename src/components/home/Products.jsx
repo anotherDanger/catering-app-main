@@ -24,8 +24,12 @@ function Products() {
       const imageMap = {};
       for (const product of data || []) {
         if (product.image_metadata) {
-          const url = await getProductImage(product.image_metadata);
-          imageMap[product.product_id] = url;
+          try {
+            const url = await getProductImage(product.image_metadata);
+            imageMap[product.product_id] = url;
+          } catch (error) {
+            console.error(`Gagal memuat gambar untuk produk ${product.product_id}:`, error);
+          }
         }
       }
       setImageURLs(imageMap);
@@ -61,44 +65,47 @@ function Products() {
             <p>Loading...</p>
           ) : (
             <Swiper
+              className="product-swiper"
               spaceBetween={20}
               slidesPerView={1}
               breakpoints={{
                 576: { slidesPerView: 2, spaceBetween: 20 },
-                768: { slidesPerView: 3, spaceBetween: 30 },
+                992: { slidesPerView: 3, spaceBetween: 30 },
               }}
             >
               {products.map((product, index) => (
                 <SwiperSlide key={product.product_id || index}>
-                  <div className="card crop-img">
+                  <div className="card h-100">
                     <img
                       src={
                         imageURLs[product.product_id] ||
                         "../img-products/sample.jpg"
                       }
-                      className="card-image card-img-top"
+                      className="card-image"
                       alt={product.product_name}
                     />
-                    <h5 className="card-title">{product.product_name}</h5>
-                    <p className="card-text">
-                      Stock: {product.product_stock.toLocaleString()}
-                    </p>
-                    <p className="card-text">
-                      Rp. {product.product_price.toLocaleString()}
-                    </p>
-                    <button
-                      className="btn btn-view-product mb-3"
-                      type="button"
-                      onClick={() => openModal(product)}
-                    >
-                      Lihat Produk
-                    </button>
+                    <div className="card-body">
+                      <h5 className="card-title">{product.product_name}</h5>
+                      <p className="card-text">
+                        Stok: {product.product_stock.toLocaleString()}
+                      </p>
+                      <p className="card-text fw-bold">
+                        Rp. {product.product_price.toLocaleString()}
+                      </p>
+                      <button
+                        className="btn btn-view-product mt-auto"
+                        type="button"
+                        onClick={() => openModal(product)}
+                      >
+                        Lihat Produk
+                      </button>
+                    </div>
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
           )}
-          <div className="custom-package-box mt-5">
+          <div className="custom-package-box">
             <p className="custom-package-text">
               Butuh paket khusus? Kami siap bantu sesuai kebutuhan Anda!
             </p>
