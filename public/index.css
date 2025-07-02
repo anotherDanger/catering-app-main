@@ -240,7 +240,7 @@ body {
     align-items: center;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
     .navbar-nav .nav-link {
         font-size: 1rem;
     }
