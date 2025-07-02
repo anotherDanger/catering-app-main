@@ -7,7 +7,7 @@ export default function App() {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-brown navbar-dark shadow-lg fixed-top">
-        <div className="container">
+        <div className="container-fluid">
           <a className="navbar-brand" href="#">
             Khaira Catering
           </a>
@@ -22,29 +22,23 @@ export default function App() {
           >
             <span className="navbar-toggler-icon" />
           </button>
+          
           <div className="collapse navbar-collapse" id="navbarText">
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link" href="#home">
-                  Home
-                </a>
+                <a className="nav-link" href="#home">Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#menu">
-                  Menu
-                </a>
+                <a className="nav-link" href="#menu">Menu</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#about">
-                  About
-                </a>
+                <a className="nav-link" href="#about">About</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#kontak">
-                  Contact
-                </a>
+                <a className="nav-link" href="#kontak">Contact</a>
               </li>
             </ul>
+
             <ul className="navbar-nav ms-lg-auto d-flex flex-row align-items-center gap-2">
               <li className="nav-item">
                 <button
@@ -88,6 +82,7 @@ export default function App() {
           </div>
         </div>
       </nav>
+
       <OffCanvasHistory />
       <OffCanvasProfile />
       <OffCanvasCart />
