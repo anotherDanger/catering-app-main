@@ -11,16 +11,31 @@ body {
     background-color: #394034 !important;
 }
 
-.navbar > .container, .navbar > .container-fluid {
+.navbar > .container,
+.navbar > .container-fluid {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-wrap: nowrap;
     align-items: center;
+    justify-content: space-between;
 }
 
 .navbar-brand {
-    margin-right: auto;
+    margin-right: auto !important;
     white-space: nowrap;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.navbar-toggler {
+    flex-shrink: 0;
+    margin-left: 1rem;
+}
+
+.navbar-collapse {
+    flex-basis: 100%;
+    flex-grow: 1;
+    align-items: center;
 }
 
 .navbar-dark .navbar-brand,
@@ -196,10 +211,13 @@ h1 {
 .offcanvas-header { display: flex; justify-content: space-between; align-items: center; }
 
 @media (max-width: 991.98px) {
+    .navbar > .container,
+    .navbar > .container-fluid {
+        flex-wrap: wrap;
+    }
     .navbar-collapse {
         flex-basis: 100%;
-        flex-grow: 1;
-        align-items: center;
+        margin-top: 1rem;
     }
     .navbar-nav {
         width: 100%;
