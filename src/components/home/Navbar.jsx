@@ -45,7 +45,7 @@ export default function App() {
                 </a>
               </li>
             </ul>
-            <ul className="navbar-nav flex-row gap-2">
+            <ul className="navbar-nav ms-lg-auto d-flex flex-row align-items-center gap-2">
               <li className="nav-item">
                 <button
                   className="btn btn-outline-light btn-icon"
