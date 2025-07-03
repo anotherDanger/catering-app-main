@@ -428,3 +428,27 @@ h1 {
         height: 350px;
     }
 }
+
+.custom-image-wrapper {
+    width: 100%;
+    max-width: 380px;
+    height: 250px;
+    background-image: url('./images/khaira.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    animation: fadeIn 0.8s forwards;
+}
+
+.caption-small {
+    font-size: 0.75rem;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+

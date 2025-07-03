@@ -25,7 +25,7 @@ function About() {
                             
                             <div className="mt-2">
                                 <h4 className="fs-6">Lokasi Kami</h4>
-                                <p style={{ fontSize: '0.75rem', fontWeight: 600 }}>
+                                <p style={{ fontSize: '0.80rem', fontWeight: 600 }}>
                                     Jl. Pucang No.48, Rejamulya, Gumilir, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53231
                                 </p>
                             </div>
@@ -33,13 +33,8 @@ function About() {
                         </div>
 
                         <div className="col-md-6 text-center">
-                            <img
-                                src="../../public/images/khaira.png" 
-                                className="img-fluid rounded-3 shadow"
-                                style={{ maxWidth: '380px' }}
-                                alt=""
-                            />
-                            <p className="mt-2 text-white fs-6">Tentang Khaira Catering</p>
+                            <div className="custom-image-wrapper rounded-3 shadow mx-auto"></div>
+                            <p className="mt-2 text-white caption-small">Tentang Khaira Catering</p>
                         </div>
                     </div>
                 </div>
