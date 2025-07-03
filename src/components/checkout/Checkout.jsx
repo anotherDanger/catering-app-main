@@ -17,6 +17,7 @@ const Checkout = () => {
     kecamatan: '',
     desa: '',
   });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -35,8 +36,25 @@ const Checkout = () => {
     };
   }, []);
 
+  const validateNoHp = (value) => {
+    if (!/^08\d{0,10}$/.test(value)) {
+      return 'Nomor HP harus diawali 08 dan maksimal 12 digit angka';
+    }
+    return '';
+  };
+
   const handleChange = async (e) => {
     const { name, value } = e.target;
+    if (name === 'no_hp') {
+      const errorMsg = validateNoHp(value);
+      setErrors(prev => ({ ...prev, no_hp: errorMsg }));
+      if (errorMsg) {
+        setForm(prev => ({ ...prev, [name]: value.slice(0, 12) }));
+      } else {
+        setForm(prev => ({ ...prev, [name]: value }));
+      }
+      return;
+    }
     setForm(prev => ({ ...prev, [name]: value }));
     if (name === 'kecamatan') {
       setVillages([]);
@@ -55,6 +73,14 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (errors.no_hp) {
+      alert(errors.no_hp);
+      return;
+    }
+    if (!form.no_hp || !/^08\d{9,11}$/.test(form.no_hp)) {
+      alert('Nomor HP harus diawali 08 dan berjumlah 10-12 digit angka');
+      return;
+    }
     try {
       const username = localStorage.getItem('user') || '';
       const payload = {
@@ -85,7 +111,8 @@ const Checkout = () => {
             </div>
             <div className="checkout-form-group">
               <label htmlFor="no_hp">Nomor HP</label>
-              <input type="text" id="no_hp" name="no_hp" className="form-control" value={form.no_hp} onChange={handleChange} required />
+              <input type="text" id="no_hp" name="no_hp" className="form-control" value={form.no_hp} onChange={handleChange} maxLength={12} required />
+              {errors.no_hp && <small className="text-danger">{errors.no_hp}</small>}
             </div>
             <div className="checkout-form-group">
               <label htmlFor="alamat">Alamat Lengkap</label>
