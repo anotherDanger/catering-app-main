@@ -103,7 +103,7 @@ export const deleteCartItem = async (username, productId) => {
   }
 
   let token = localStorage.getItem('access_token');
-  let response = await fetch(`https://khatering.shop/user/v1/cart/${username}/${productId}`, {
+  let response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}/${productId}`, {
     method: 'DELETE',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -114,7 +114,7 @@ export const deleteCartItem = async (username, productId) => {
     const refreshed = await tryRefreshToken();
     if (refreshed) {
       token = localStorage.getItem('access_token');
-      response = await fetch(`https://khatering.shop/user/v1/cart/${username}/${productId}`, {
+      response = await fetch(`https://khatering.shop/user/api/v1/cart/${username}/${productId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
