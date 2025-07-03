@@ -35,9 +35,9 @@ function About() {
 
                         <div className="col-md-6 text-center">
                             <img
-                                src="../../public/khaira.png" 
+                                src="../../../public/khaira.png" 
                                 className="img-fluid rounded-3 shadow"
-                                style={{ maxWidth: '450px' }}
+                                style={{ maxWidth: '380px' }}
                                 alt="Tentang Khaira Catering"
                             />
                         </div>
