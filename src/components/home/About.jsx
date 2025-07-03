@@ -23,7 +23,7 @@ function About() {
                                 pelayanan profesional dan pengalaman bertahun-tahun.
                             </p>
                             
-                            <div className="mt-4">
+                            <div className="mt-2">
                                 <h4>Lokasi Kami</h4>
                                 <p>
                                     <strong>
@@ -35,7 +35,7 @@ function About() {
 
                         <div className="col-md-6 text-center">
                             <img
-                                src="../../../public/khaira.png" 
+                                src="../../../../public/khaira.png" 
                                 className="img-fluid rounded-3 shadow"
                                 style={{ maxWidth: '380px' }}
                                 alt="Tentang Khaira Catering"
