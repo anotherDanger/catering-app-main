@@ -25,17 +25,15 @@ function About() {
                             
                             <div className="mt-2">
                                 <h4>Lokasi Kami</h4>
-                                <p>
-                                    <strong>
-                                        Jl. Pucang No.48, Rejamulya, Gumilir, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53231
-                                    </strong>
+                                <p className="fs-6 fw-bold">
+                                    Jl. Pucang No.48, Rejamulya, Gumilir, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53231
                                 </p>
                             </div>
                         </div>
 
                         <div className="col-md-6 text-center">
                             <img
-                                src="../../../../public/khaira.png" 
+                                src="../../../../public/images/khaira.png" 
                                 className="img-fluid rounded-3 shadow"
                                 style={{ maxWidth: '380px' }}
                                 alt="Tentang Khaira Catering"
