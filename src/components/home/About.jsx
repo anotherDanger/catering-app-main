@@ -13,6 +13,10 @@ function About() {
                                 pelayanan profesional.</p>
                             <p>Dengan pengalaman bertahun-tahun, kami berkomitmen memberikan pengalaman katering yang
                                 tak terlupakan.</p>
+                            <p>
+                                Lokasi
+                                Jl. Pucang No.48, Rejamulya, Gumilir, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53231
+                            </p>
                         </div>
                         <div className="col-md-6 text-center">
                             <img src="../img-products/khaira.png" className="img-fluid img-about"
@@ -24,5 +28,9 @@ function About() {
         </div>
     )
 }
+
+
+
+
 
 export default About;
