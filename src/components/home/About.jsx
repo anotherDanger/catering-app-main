@@ -26,10 +26,17 @@ function About() {
                             <div className="mt-2">
                                 <h4 className="fs-6">Lokasi Kami</h4>
                                 <p style={{ fontSize: '0.80rem', fontWeight: 600 }}>
-                                    Jl. Pucang No.48, Rejamulya, Gumilir, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53231
+                                    <a
+                                        href="https://maps.app.goo.gl/jy41kUoLx7N1E5pd8"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-white text-decoration-none"
+                                    >
+                                        <i className="bi bi-geo-alt-fill me-2"></i>
+                                        Jl. Pucang No.48, Rejamulya, Gumilir, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53231
+                                    </a>
                                 </p>
                             </div>
-
                         </div>
 
                         <div className="col-md-6 text-center">
