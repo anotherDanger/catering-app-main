@@ -1,60 +1,62 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import { fetchDistrictsByRegency, fetchVillagesByDistrict } from '../../api/wilayah'
-import { postCheckout } from '../../api/checkout'
-import './checkout.css'
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { fetchDistrictsByRegency, fetchVillagesByDistrict } from '../../api/wilayah';
+import { postCheckout } from '../../api/checkout';
+import './checkout.css';
 
 const Checkout = () => {
-  const location = useLocation()
-  const checkoutData = location.state || {}
-  const [districts, setDistricts] = useState([])
-  const [villages, setVillages] = useState([])
+  const location = useLocation();
+  const navigate = useNavigate();
+  const checkoutData = location.state || {};
+  const [districts, setDistricts] = useState([]);
+  const [villages, setVillages] = useState([]);
   const [form, setForm] = useState({
     nama: '',
     no_hp: '',
     alamat: '',
     kecamatan: '',
     desa: '',
-  })
+  });
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden'
+    document.body.style.overflow = 'hidden';
     async function loadDistricts() {
       try {
-        const data = await fetchDistrictsByRegency('3301')
-        setDistricts(data)
+        const data = await fetchDistrictsByRegency('3301');
+        setDistricts(data);
       } catch (e) {
-        alert(e.message)
+        alert(e.message);
       }
     }
-    loadDistricts()
+    loadDistricts();
     return () => {
-      document.body.style.overflow = 'auto'
-      document.documentElement.style.overflow = 'auto'
-    }
-  }, [])
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+    };
+  }, []);
 
   const handleChange = async (e) => {
-    const { name, value } = e.target
-    setForm(prev => ({ ...prev, [name]: value }))
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
     if (name === 'kecamatan') {
-      const selected = districts.find(d => d.name === value)
+      setVillages([]);
+      setForm(prev => ({ ...prev, desa: '' }));
+      const selected = districts.find(d => d.name === value);
       if (selected) {
         try {
-          const villageData = await fetchVillagesByDistrict(selected.id)
-          setVillages(villageData)
-          setForm(prev => ({ ...prev, desa: '' }))
+          const villageData = await fetchVillagesByDistrict(selected.id);
+          setVillages(villageData);
         } catch (e) {
-          alert(e.message)
+          alert(e.message);
         }
       }
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const username = localStorage.getItem('user') || ''
+      const username = localStorage.getItem('user') || '';
       const payload = {
         ...form,
         product_id: checkoutData.product?.product_id || '',
@@ -62,13 +64,14 @@ const Checkout = () => {
         quantity: checkoutData.quantity || 0,
         total: checkoutData.total || 0,
         username
-      }
-      await postCheckout(payload)
-      alert('Pesanan berhasil dibuat')
+      };
+      await postCheckout(payload);
+      alert('Pesanan berhasil dibuat');
+      navigate('/');
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 
   return (
     <div className="checkout-container">
@@ -110,17 +113,12 @@ const Checkout = () => {
               <label>Total Harga</label>
               <div className="fw-bold">Rp {checkoutData.total ? checkoutData.total.toLocaleString() : '0'}</div>
             </div>
-            <div className="checkout-icon-container">
-              <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalSpay">ShopeePay</button>
-              <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalGopay">GoPay</button>
-              <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalDana">DANA</button>
-            </div>
             <button type="submit" className="btn btn-primary w-100 mt-3">Buat Pesanan</button>
           </form>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Checkout
+export default Checkout;
