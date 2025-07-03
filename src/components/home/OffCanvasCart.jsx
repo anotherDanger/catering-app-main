@@ -38,15 +38,14 @@ function OffCanvasCart() {
 
   const handleDecrease = async (productId) => {
     try {
-      const username = localStorage.getItem('user')
-      await decreaseCartItem(username, productId, 1)
-      fetchCart()
+      const username = localStorage.getItem('user');
+      await decreaseCartItem(username, productId, 1);
+      fetchCart();
     } catch (error) {
-      console.error(error)
-      console.log(error)
-      alert(error.message)
+      console.error(error);
+      alert(error.message);
     }
-  }
+  };
 
   const handleIncrease = async (item) => {
     if (item.quantity >= item.product_stock) return

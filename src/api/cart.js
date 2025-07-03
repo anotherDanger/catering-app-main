@@ -162,5 +162,9 @@ export const decreaseCartItem = async (username, productId, quantity) => {
     throw new Error(errorData.data || 'Gagal mengurangi kuantitas produk.');
   }
   
+  if (response.status === 204) {
+    return null;
+  }
+  
   return await response.json();
 };
