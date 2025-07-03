@@ -43,6 +43,7 @@ function OffCanvasCart() {
       fetchCart()
     } catch (error) {
       console.error(error)
+      console.log(error)
       alert(error.message)
     }
   }
