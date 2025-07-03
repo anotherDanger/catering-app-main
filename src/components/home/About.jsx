@@ -24,16 +24,17 @@ function About() {
                             </p>
                             
                             <div className="mt-2">
-                                <h4>Lokasi Kami</h4>
-                                <p className="fs-6 fw-bold">
+                                <h4 className="fs-6">Lokasi Kami</h4>
+                                <p style={{ fontSize: '0.75rem', fontWeight: 600 }}>
                                     Jl. Pucang No.48, Rejamulya, Gumilir, Kec. Cilacap Utara, Kabupaten Cilacap, Jawa Tengah 53231
                                 </p>
                             </div>
+
                         </div>
 
                         <div className="col-md-6 text-center">
                             <img
-                                src="../../../public/images/khaira.png" 
+                                src="../../public/images/khaira.png" 
                                 className="img-fluid rounded-3 shadow"
                                 style={{ maxWidth: '380px' }}
                                 alt=""
