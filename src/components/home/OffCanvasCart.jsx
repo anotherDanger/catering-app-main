@@ -27,14 +27,14 @@ function OffCanvasCart() {
 
   const handleDelete = async (productId) => {
     try {
-      const username = localStorage.getItem('user')
-      await deleteCartItem(username, productId)
-      fetchCart()
+      const username = localStorage.getItem('user');
+      await deleteCartItem(username, productId);
+      fetchCart();
     } catch (error) {
-      console.error(error)
-      alert(error.message)
+      console.error(error);
+      alert(error.message);
     }
-  }
+  };
 
   const handleDecrease = async (productId) => {
     try {

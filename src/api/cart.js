@@ -128,6 +128,10 @@ export const deleteCartItem = async (username, productId) => {
     throw new Error(errorData.data || 'Gagal menghapus produk dari keranjang.');
   }
 
+  if (response.status === 204) {
+    return null;
+  }
+
   return await response.json();
 };
 
