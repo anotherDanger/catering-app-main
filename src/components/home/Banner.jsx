@@ -10,6 +10,9 @@ function Banner() {
                 <a href="#menu">
                     <button type="button" className="btn btn-primary btn-lg mt-4 btn-auto">Order Now</button>
                 </a>
+                <div className="mt-3">
+                  <strong>Kami melayani area Cilacap dan sekitarnya</strong>
+                </div>
             </div>
         </div>
     );
