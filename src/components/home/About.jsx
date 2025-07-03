@@ -33,11 +33,12 @@ function About() {
 
                         <div className="col-md-6 text-center">
                             <img
-                                src="../../../../public/images/khaira.png" 
+                                src="../../../public/images/khaira.png" 
                                 className="img-fluid rounded-3 shadow"
                                 style={{ maxWidth: '380px' }}
-                                alt="Tentang Khaira Catering"
+                                alt=""
                             />
+                            <p className="mt-2 text-white fs-6">Tentang Khaira Catering</p>
                         </div>
                     </div>
                 </div>
