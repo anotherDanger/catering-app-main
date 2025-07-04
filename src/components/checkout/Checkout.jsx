@@ -37,25 +37,25 @@ const Checkout = () => {
   }, []);
 
   const validateNoHp = (value) => {
-    if (!/^08\d{0,10}$/.test(value)) {
-      return 'Nomor HP harus diawali 08 dan maksimal 12 digit angka';
+    if (!/^08\d{0,11}$/.test(value)) {
+      return 'Nomor HP harus diawali 08 dan maksimal 13 digit angka';
     }
     return '';
   };
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
+
     if (name === 'no_hp') {
-      const errorMsg = validateNoHp(value);
+      const numericValue = value.replace(/[^0-9]/g, '');
+      const errorMsg = validateNoHp(numericValue);
       setErrors(prev => ({ ...prev, no_hp: errorMsg }));
-      if (errorMsg) {
-        setForm(prev => ({ ...prev, [name]: value.slice(0, 12) }));
-      } else {
-        setForm(prev => ({ ...prev, [name]: value }));
-      }
+      setForm(prev => ({ ...prev, [name]: numericValue }));
       return;
     }
+
     setForm(prev => ({ ...prev, [name]: value }));
+
     if (name === 'kecamatan') {
       setVillages([]);
       setForm(prev => ({ ...prev, desa: '' }));
@@ -77,8 +77,8 @@ const Checkout = () => {
       alert(errors.no_hp);
       return;
     }
-    if (!form.no_hp || !/^08\d{9,11}$/.test(form.no_hp)) {
-      alert('Nomor HP harus diawali 08 dan berjumlah 10-12 digit angka');
+    if (!form.no_hp || !/^08\d{8,11}$/.test(form.no_hp)) {
+      alert('Nomor HP harus diawali 08 dan berjumlah 10-13 digit angka');
       return;
     }
     try {
@@ -92,7 +92,7 @@ const Checkout = () => {
         username
       };
       await postCheckout(payload);
-      alert('Pesanan berhasil dibuat');
+      alert('Silahkan hubungi admin untuk konfirmasi');
       navigate('/');
     } catch (error) {
       alert(error.message);
@@ -111,7 +111,7 @@ const Checkout = () => {
             </div>
             <div className="checkout-form-group">
               <label htmlFor="no_hp">Nomor HP</label>
-              <input type="text" id="no_hp" name="no_hp" className="form-control" value={form.no_hp} onChange={handleChange} maxLength={12} required />
+              <input type="tel" id="no_hp" name="no_hp" className="form-control" value={form.no_hp} onChange={handleChange} maxLength={13} required />
               {errors.no_hp && <small className="text-danger">{errors.no_hp}</small>}
             </div>
             <div className="checkout-form-group">
