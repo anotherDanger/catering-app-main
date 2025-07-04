@@ -64,15 +64,6 @@ const Login = () => {
                 required
               />
             </div>
-            <div className="login-form-check">
-              <input
-                type="checkbox"
-                id="remember"
-                name="remember"
-                className="login-checkbox"
-              />
-              <label htmlFor="remember" className="login-check-label">Ingat Saya</label>
-            </div>
             <button type="submit" className="login-btn">Masuk</button>
           </form>
         </div>
